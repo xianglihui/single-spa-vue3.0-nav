@@ -1,11 +1,15 @@
 <template>
-  <!-- <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div> -->
+  <nav-header></nav-header>
   <router-view />
 </template>
-
+<script lang="ts">
+import NavHeader from "@/components/NavHeader.vue";
+export default {
+  components: {
+    NavHeader,
+  },
+};
+</script>
 <style lang="less">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
