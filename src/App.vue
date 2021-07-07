@@ -1,12 +1,22 @@
 <template>
-  <nav-header></nav-header>
+  <nav-header v-if="isHideMenu"></nav-header>
   <router-view />
 </template>
 <script lang="ts">
+import { reactive, toRefs } from "vue";
 import NavHeader from "@/components/NavHeader.vue";
 export default {
   components: {
     NavHeader,
+  },
+  setup() {
+    const state = reactive({
+      isHideMen: false,
+    });
+    return {
+      ...toRefs(state),
+      // getTestInfo,
+    };
   },
 };
 </script>

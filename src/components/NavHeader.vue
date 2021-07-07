@@ -36,6 +36,7 @@ export default {
   setup() {
     const state = reactive({
       title: "System",
+      isLogin: false,
       crumbs: [
         {
           name: "首页",
