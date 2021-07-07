@@ -3,7 +3,7 @@
     <div class="login-bg">
       <div class="logo"></div>
       <div class="login-form">
-        <div class="loginForm_title">平台登录</div>
+        <div class="loginForm_title">{{ title }}平台登录</div>
         <div class="loginForm_body">
           <el-form
             :model="loginForm"
@@ -43,7 +43,8 @@
 <script lang="ts">
 import * as Models from "@/models/Models";
 import { reactive, toRefs, onMounted, ref } from "vue";
-import { AUTO_AUTH_PATH, AppConfig } from "@/untils/env";
+import { AutoAuthorization, Authorization } from "@/untils/authorization"
+import { AUTO_AUTH_PATH, AppConfig } from "@/utils/env";
 export default {
   setup() {
     const state = reactive({
@@ -68,10 +69,9 @@ export default {
         ],
       },
       logins: AppConfig.login || [],
-      // imageVerficationCode: [
-      //   { required: true, validator: this.checkImgCode, trigger: "blur" },
-      // ],
+      title: AppConfig.title || "",
     });
+    // account账号密码登录 domain域账号登录
     const submitLogin = (type: string) => {
       switch (type) {
         case "account":
@@ -108,12 +108,12 @@ export default {
           //   this.loginForm.clientKey = "D07108DD991071C9";
           // }
 
-          // await this.login();
+          await login();
           // loading.close();
         } else {
           return false;
         }
-        console.log("state",state.loginForm)
+        console.log("state", state.loginForm);
       });
     };
     const domainLogin = () => {
@@ -122,7 +122,8 @@ export default {
           // const loading = this.$loading({ lock: true });
           state.loginForm.grant_type = "sso";
           state.loginForm.client_id = "SSO";
-          state.loginForm.client_secret = "52454724-e1f0-45dd-9167-38b40b46a935";
+          state.loginForm.client_secret =
+            "52454724-e1f0-45dd-9167-38b40b46a935";
           state.loginForm.scope = "PortalAPI offline_access";
           // await this.login();
           // loading.close();
@@ -130,7 +131,27 @@ export default {
           return false;
         }
       });
-      console.log("state",state.loginForm)
+      console.log("state", state.loginForm);
+    };
+    const login = async () => {
+      let res: Models.AuthRes = {};
+      // 自动登录
+      await Authorization(state.loginForm)
+        .then(async (res: Models.AuthRes) => {
+          await this.saveToken(res.access_token || "");
+        })
+        .catch((res) => {
+          this.getImgCode();
+          if (
+            res.response.data &&
+            res.response.data.error_description ===
+              "RequiredPhoneVerificationCode"
+          ) {
+            this.mobile = res.response.data["phone"];
+            this.dialogVisiabled = true;
+          }
+        });
+      return true;
     };
     onMounted(async () => {
       console.log("Component is mounted!");

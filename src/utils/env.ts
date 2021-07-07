@@ -6,7 +6,7 @@ enum loginType {
 }
 
 const AppOps: any = {
-  "pa-dev.lonsid.cn": {
+  "localhost:3000": {
     name: "LONSID PA",
     title: "朗诗德PA",
     app: "PA",
@@ -20,8 +20,8 @@ const AppOps: any = {
     ], // account：账号登录   domain： 域账号登录
   },
   localhost: {
-    name: "LONSID PA",
-    title: "朗诗德PA",
+    name: "localhost",
+    title: "LocalHost",
     app: "PA",
     isAutoLogin: false,
     isOpenNews: false,
@@ -77,10 +77,4 @@ export const AUTO_AUTH_PATH: string =
   env === "development"
     ? "https://portal-test.lonsid.cn"
     : "https://cc.lonsid.cn";
-// 正式环境
-// https://cc.lonsid.cn/api/domainidentity/connect/token
-// https://cc.lonsid.cn/api/domainidentity/connect/token
-// 测试环境
-// https://portal-dev.lonsid.cn/api/domainidentity/connect/token
-// https://portal-dev.lonsid.cn/api/domainidentity/connect/token
-// export const AUTO_AUTH_PATH: string = env === "development"? "https://portal-dev.lonsid.cn" : "https://cc.lonsid.cn:8202";
+
