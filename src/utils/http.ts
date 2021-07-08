@@ -5,16 +5,8 @@ import axios, {
   AxiosResponse,
 } from "axios";
 import qs from "qs";
-// import { Message, Loading } from "element-ui"
+import { ElMessage } from 'element-plus'
 import { AJAX_PATH } from "@/utils/env";
-// import moment from "moment"
-// import Base = moment.unitOfTime.Base
-// import { InitApm } from "@/plugins/apmApi"
-
-/****** 创建axios实例 ******/
-// apm
-// const apm = new InitApm("nav")
-// apm.apmInit()
 
 const service = axios.create({
   baseURL: AJAX_PATH, //process.env.BASE_URL,  // api的base_url
@@ -30,43 +22,37 @@ service.interceptors.request.use(
   },
   (error) => {
     // 请求错误处理
-    // Message.error("请求失败，请查看控制台提示")
     return Promise.reject(error);
   }
 );
 
 service.interceptors.response.use(
   (response) => {
-    // apm
-    // apm.apmHandleResponse(response)
     return response;
   },
   (error) => {
-    // apm
-    // apm.apmHandleResponseError(error)
-    // 响应错误处理console.log('error');
     if (error.response.status === 401) {
-      // Message({
-      //     message: "登录失效，请重新登录",
-      //     type: 'error',
-      //     onClose: ()=>{
-      //         localStorage.clear()
-      //         sessionStorage.clear()
-      //         window.location.href = "/login"
-      //     }
-      // })
+      ElMessage({
+          message: "登录失效，请重新登录",
+          type: 'error',
+          onClose: ()=>{
+              localStorage.clear()
+              sessionStorage.clear()
+              window.location.href = "/login"
+          }
+      })
     } else if (error.response.status === 400) {
       if (
         error.response.data.error_description &&
         error.response.data.error_description ===
           "RequiredPhoneVerificationCode"
       ) {
-        // Message.error("请验证手机验证码")
+        ElMessage.error("请验证手机验证码")
       } else {
-        // Message.error(error.response.data.error_description)
+        ElMessage.error(error.response.data.error_description)
       }
     } else {
-      // Message.error("请求失败，请查看控制台提示")
+      ElMessage.error("请求失败，请查看控制台提示")
     }
     return Promise.reject(error);
   }

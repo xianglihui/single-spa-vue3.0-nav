@@ -45,6 +45,7 @@ import * as Models from "@/models/Models";
 import { reactive, toRefs, onMounted, ref } from "vue";
 import { AutoAuthorization, Authorization } from "@/utils/authorization";
 import { AUTO_AUTH_PATH, AppConfig } from "@/utils/env";
+import { ElMessage } from 'element-plus'
 export default {
   setup() {
     const state = reactive({
@@ -81,7 +82,7 @@ export default {
           domainLogin();
           break;
         default:
-          // $message({ message: "登录方式不存在", type: "warning" });
+          ElMessage({ message: "登录方式不存在", type: "warning" });
           break;
       }
     };
