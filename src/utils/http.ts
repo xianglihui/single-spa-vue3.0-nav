@@ -113,7 +113,7 @@ export class HttpResource<T> {
   }
 
   async request(
-    data?: Record<string, unknown>,
+    data?: Record<string, unknown> | string,
     contentType = "application/x-www-form-urlencoded"
   ): Promise<T> {
     const config: AxiosRequestConfig = {
