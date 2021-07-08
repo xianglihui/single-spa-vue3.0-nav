@@ -1,0 +1,39 @@
+{
+  "token": [
+    {
+      "token": "2333"
+    }
+  ],
+  "getPermissions": [
+    {
+      "userid": "123456789",
+      "permission": ["localA.App", "localA.App.index"]
+    }
+  ],
+  "userinfo": {
+    "id": "1",
+    "name": "测试用户"
+  },
+  "getMenuTree": {
+    "menu": [
+      {
+        "code": "",
+        "id": 1,
+        "name": "本地测试平台1",
+        "parantCode": "localA",
+        "menus": [
+          {
+            "id": "11",
+            "name": "首页",
+            "code": "localA.App.index",
+            "parentCode": "localA.App",
+            "icon": "iconfont xxx",
+            "url": "/index"
+          }
+        ]
+      },
+      {}
+    ],
+    "code": "localA平台"
+  }
+}

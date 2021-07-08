@@ -36,3 +36,7 @@ export async function Authorization(options: Models.AuthReq) {
     return {};
   }
 }
+// 获取菜单
+export function GetMenuItems() {
+  console.log("菜单");
+}

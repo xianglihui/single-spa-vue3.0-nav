@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "serve:standalone": "vue-cli-service serve --mode standalone"
+    "serve:standalone": "vue-cli-service serve --mode standalone",
+    "json-server": "json-server  __json_server_mock__/db.json --watch --port 3001"
   },
   "dependencies": {
     "axios": "^0.21.1",

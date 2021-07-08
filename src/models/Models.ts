@@ -108,7 +108,6 @@ export interface UserInfoNew {
   id: string;
 }
 
-export interface ImageCode {
-  token?: string;
-  imageBase64?: string;
+export interface Code {
+  token: string;
 }

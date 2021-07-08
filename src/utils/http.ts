@@ -5,7 +5,7 @@ import axios, {
   AxiosResponse,
 } from "axios";
 import qs from "qs";
-import { ElMessage } from 'element-plus'
+import { ElMessage } from "element-plus";
 import { AJAX_PATH } from "@/utils/env";
 
 const service = axios.create({
@@ -33,26 +33,26 @@ service.interceptors.response.use(
   (error) => {
     if (error.response.status === 401) {
       ElMessage({
-          message: "登录失效，请重新登录",
-          type: 'error',
-          onClose: ()=>{
-              localStorage.clear()
-              sessionStorage.clear()
-              window.location.href = "/login"
-          }
-      })
+        message: "登录失效，请重新登录",
+        type: "error",
+        onClose: () => {
+          localStorage.clear();
+          sessionStorage.clear();
+          window.location.href = "/login";
+        },
+      });
     } else if (error.response.status === 400) {
       if (
         error.response.data.error_description &&
         error.response.data.error_description ===
           "RequiredPhoneVerificationCode"
       ) {
-        ElMessage.error("请验证手机验证码")
+        ElMessage.error("请验证手机验证码");
       } else {
-        ElMessage.error(error.response.data.error_description)
+        ElMessage.error(error.response.data.error_description);
       }
     } else {
-      ElMessage.error("请求失败，请查看控制台提示")
+      ElMessage.error("请求失败，请查看控制台提示");
     }
     return Promise.reject(error);
   }

@@ -43,9 +43,15 @@
 <script lang="ts">
 import * as Models from "@/models/Models";
 import { reactive, toRefs, onMounted, ref } from "vue";
-import { AutoAuthorization, Authorization } from "@/utils/authorization";
+import {
+  AutoAuthorization,
+  Authorization,
+  GetMenuItems,
+} from "@/utils/authorization";
 import { AUTO_AUTH_PATH, AppConfig } from "@/utils/env";
-import { ElMessage } from 'element-plus'
+import { useRoute } from "vue-router";
+import { ElLoading, ElMessage } from "element-plus";
+import * as API from "@/api";
 export default {
   setup() {
     const state = reactive({
@@ -71,6 +77,7 @@ export default {
       },
       logins: AppConfig.login || [],
       title: AppConfig.title || "",
+      token: "",
     });
     // account账号密码登录 domain域账号登录
     const submitLogin = (type: string) => {
@@ -86,6 +93,7 @@ export default {
           break;
       }
     };
+    // 提交
     const submitForm = () => {
       state.loginForm.validate(async (valid: boolean) => {
         if (valid) {
@@ -95,20 +103,6 @@ export default {
           state.loginForm.client_secret =
             "4b0e4e4c-a86e-4759-ad08-b9ea0558aa6d";
           state.loginForm.scope = "PortalAPI offline_access";
-
-          // if (this.isVerificationCode) {
-          //   console.log(msg);
-          //   if (msg["codeMsg"]) {
-          //     this.loginForm.phoneVerificationCode = msg["codeMsg"];
-          //     this.loginForm.imageVerficationToken = undefined;
-          //     this.loginForm.imageVerficationCode = undefined;
-          //   } else {
-          //     this.loginForm.imageVerficationToken = this.imageCodeRes.token;
-          //   }
-          // } else {
-          //   this.loginForm.clientKey = "D07108DD991071C9";
-          // }
-
           await login();
           // loading.close();
         } else {
@@ -117,6 +111,7 @@ export default {
         console.log("state", state.loginForm);
       });
     };
+    // 域账号登录
     const domainLogin = () => {
       state.loginForm["loginForm"].validate(async (valid: boolean) => {
         if (valid) {
@@ -134,28 +129,72 @@ export default {
       });
       console.log("state", state.loginForm);
     };
+    // 登录
     const login = async () => {
       let res: Models.AuthRes = {};
       // 自动登录
       await Authorization(state.loginForm).then(async (res: Models.AuthRes) => {
         // await this.saveToken(res.access_token || "");
       });
-      // .catch((res) => {
-      //   this.getImgCode();
-      //   if (
-      //     res.response.data &&
-      //     res.response.data.error_description ===
-      //       "RequiredPhoneVerificationCode"
-      //   ) {
-      //     this.mobile = res.response.data["phone"];
-      //     this.dialogVisiabled = true;
-      //   }
-      // });
       return true;
     };
+    const init = () => {
+      loginToken();
+    };
+    // 用户权限
+    const getPremission = () => {};
+    // 用户信息
+    const getUserInfo = () => {};
+    const saveToken = async (token: string) => {
+      ElMessage({
+        message: "登录成功",
+        type: "success",
+        duration: 1000,
+        onClose: async () => {
+          localStorage.setItem("token", token);
+          sessionStorage.setItem("token", token);
+          getPremission();
+          getUserInfo();
+          localStorage.setItem("userAccount", state.loginForm.username);
+          sessionStorage.setItem("userAccount", state.loginForm.username);
+          const menus = await GetMenuItems();
+        },
+      });
+    };
+    // 获取token
+    const loginToken = async () => {
+      try {
+        const res = await API.LoginToken.request();
+        state.token = res.token;
+        // }
+      } catch (error) {}
+    };
+    const autoLogin = () => {
+      let res: Models.AuthRes = {};
+      // ;({ lock: true, text: "自动登录..." });
+      const loading = ElLoading.service({ lock: true, text: "自动登录..." });
+      AutoAuthorization()
+        .then(async (res: any) => {
+          saveToken(res.access_token || "");
+          loading.close();
+        })
+        .catch(() => {
+          ElMessage({
+            message: "自动登录失败",
+            type: "error",
+            duration: 1000,
+          });
+        })
+        .finally(() => {
+          loading.close();
+        });
+    };
+    const route = useRoute(); // 初始化route
     onMounted(async () => {
-      console.log("Component is mounted!");
-      // test();
+      init();
+      if (AppConfig.isAutoLogin && !route.query.reLogin) {
+        autoLogin();
+      }
     });
     return {
       ...toRefs(state),
@@ -168,8 +207,8 @@ export default {
 .login {
   width: 100%;
   height: 100vh;
-  background-image: url(//iot.lonsid.cn/img/signin_bg.png);
-  background-repeat: no-repeat;
+  // background-image: url();
+  // background-repeat: no-repeat;
   background-size: cover;
   position: relative;
   display: -webkit-box;
