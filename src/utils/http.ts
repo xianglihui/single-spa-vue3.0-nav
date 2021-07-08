@@ -76,7 +76,7 @@ interface ResponseError {
   code: number;
   details?: string;
   message: string;
-  validationErrors?: object;
+  validationErrors?: Record<string, unknown>;
 }
 
 interface BaseResponse<T> {
@@ -86,14 +86,6 @@ interface BaseResponse<T> {
   unAuthorizedRequest: boolean;
 }
 
-interface Config {
-  method: string;
-  url: string;
-  headers: object;
-  paramsSerializer: object;
-  data?: object | undefined;
-  params?: string | undefined;
-}
 export enum HttpMethod {
   Get = "GET",
   Post = "POST",
@@ -121,18 +113,17 @@ export class HttpResource<T> {
   }
 
   async request(
-    data?: object | string,
-    contentType: string = "application/x-www-form-urlencoded"
+    data?: Record<string, unknown>,
+    contentType = "application/x-www-form-urlencoded"
   ): Promise<T> {
-    let config: Config = {
+    const config: AxiosRequestConfig = {
       method: this.httpMethod,
       url: this.url,
       headers: {
         "Content-Type": contentType,
         Authorization: "Bearer " + sessionStorage.getItem("token"),
       },
-      paramsSerializer: function (params: object) {
-        // return qs.stringify(params, {arrayFormat: 'brackets'})
+      paramsSerializer: function (params) {
         return qs.stringify(params, { indices: false });
       },
     };
@@ -144,25 +135,21 @@ export class HttpResource<T> {
     } else {
       config["params"] = data;
     }
-    try {
-      let res: AxiosResponse<UnionResponse<T>> = await this.serviceInstance(
-        config
-      );
-      if (this.isBoxed(res.data)) {
-        if (
-          res.data.success &&
-          res.data.error === null &&
-          !res.data.unAuthorizedRequest
-        ) {
-          return res.data.result;
-        } else {
-          throw res.data.error;
-        }
+    const res: AxiosResponse<UnionResponse<T>> = await this.serviceInstance(
+      config
+    );
+    if (this.isBoxed(res.data)) {
+      if (
+        res.data.success &&
+        res.data.error === null &&
+        !res.data.unAuthorizedRequest
+      ) {
+        return res.data.result;
       } else {
-        return res.data;
+        throw res.data.error;
       }
-    } catch (e) {
-      throw e;
+    } else {
+      return res.data;
     }
   }
 }
@@ -170,13 +157,13 @@ export class HttpResource<T> {
 export class CachedResource<T> extends HttpResource<T> {
   private cache?: T;
   async request(
-    data?: object | string,
-    contentType: string = "application/json-patch+json"
+    data?: Record<string, unknown>,
+    contentType = "application/json-patch+json"
   ): Promise<T> {
     if (this.cache) {
       return this.cache;
     } else {
-      let result = await super.request(data, contentType);
+      const result = await super.request(data, contentType);
       this.cache = result;
       return this.cache;
     }

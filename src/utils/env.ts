@@ -77,4 +77,3 @@ export const AUTO_AUTH_PATH: string =
   env === "development"
     ? "https://portal-test.lonsid.cn"
     : "https://cc.lonsid.cn";
-

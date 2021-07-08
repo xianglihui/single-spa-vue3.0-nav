@@ -43,7 +43,7 @@
 <script lang="ts">
 import * as Models from "@/models/Models";
 import { reactive, toRefs, onMounted, ref } from "vue";
-import { AutoAuthorization, Authorization } from "@/untils/authorization"
+import { AutoAuthorization, Authorization } from "@/utils/authorization";
 import { AUTO_AUTH_PATH, AppConfig } from "@/utils/env";
 export default {
   setup() {
@@ -136,21 +136,20 @@ export default {
     const login = async () => {
       let res: Models.AuthRes = {};
       // 自动登录
-      await Authorization(state.loginForm)
-        .then(async (res: Models.AuthRes) => {
-          await this.saveToken(res.access_token || "");
-        })
-        .catch((res) => {
-          this.getImgCode();
-          if (
-            res.response.data &&
-            res.response.data.error_description ===
-              "RequiredPhoneVerificationCode"
-          ) {
-            this.mobile = res.response.data["phone"];
-            this.dialogVisiabled = true;
-          }
-        });
+      await Authorization(state.loginForm).then(async (res: Models.AuthRes) => {
+        // await this.saveToken(res.access_token || "");
+      });
+      // .catch((res) => {
+      //   this.getImgCode();
+      //   if (
+      //     res.response.data &&
+      //     res.response.data.error_description ===
+      //       "RequiredPhoneVerificationCode"
+      //   ) {
+      //     this.mobile = res.response.data["phone"];
+      //     this.dialogVisiabled = true;
+      //   }
+      // });
       return true;
     };
     onMounted(async () => {
