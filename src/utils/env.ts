@@ -43,37 +43,37 @@ export const App_Name: string = AppOps[location.hostname].app; //应用名称，
 // 接口地址
 export const AJAX_PATH: string =
   env === "development"
-    ? "https://soa-dev.lonsid.cn/api/"
-    : "https://soa.lonsid.cn/api/";
+    ? "http://localhost:3001"
+    : "http://soa.lonsid.cn/api/";
 
 // 管理平台地址
 export const WEB_PATH: string =
-  env === "development" ? "https://localhost:5000" : "";
+  env === "development" ? "http://localhost:5000" : "";
 
 // 门户网站地址
 export const OS_PATH: string =
-  env === "development" ? "https://localhost:5000" : "";
+  env === "development" ? "http://localhost:3001" : "";
 
 // 门户网站地址
 export const PORTAL_PATH: string =
   env === "development"
-    ? "https://osc-test.lonsid.cn"
-    : "https://osc.lonsid.cn";
+    ? "http://localhost:3001"
+    : "";
 
 // 通用服务
 export const GeneralService: string =
   env === "development"
-    ? "https://soa-dev.lonsid.cn/api/GeneralService"
-    : "https://soa.lonsid.cn/api/GeneralService";
+    ? "http://localhost:3001"
+    : "";
 
 //  登录认证地址
 export const AUTH_PATH: string =
   env === "development"
-    ? "https://soa-dev.lonsid.co"
-    : "https://psso.lonsid.cn";
+    ? "http://localhost:3001"
+    : "";
 
 //  自动登录认证地址
 export const AUTO_AUTH_PATH: string =
   env === "development"
-    ? "https://portal-test.lonsid.cn"
-    : "https://cc.lonsid.cn";
+    ? "http://localhost:3001"
+    : "";

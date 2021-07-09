@@ -142,9 +142,13 @@ export default {
       loginToken();
     };
     // 用户权限
-    const getPremission = () => {};
+    const getPremission = () => {
+      console.log('用户权限')
+    };
     // 用户信息
-    const getUserInfo = () => {};
+    const getUserInfo = () => {
+      console.log('用户信息')
+    };
     const saveToken = async (token: string) => {
       ElMessage({
         message: "登录成功",
@@ -165,9 +169,11 @@ export default {
     const loginToken = async () => {
       try {
         const res = await API.LoginToken.request();
-        state.token = res.token;
+        // state.token = res.token;
         // }
-      } catch (error) {}
+      } catch (error) {
+        console.log(error)
+      }
     };
     const autoLogin = () => {
       let res: Models.AuthRes = {};
@@ -191,6 +197,7 @@ export default {
     };
     const route = useRoute(); // 初始化route
     onMounted(async () => {
+      // 初始化
       init();
       if (AppConfig.isAutoLogin && !route.query.reLogin) {
         autoLogin();
