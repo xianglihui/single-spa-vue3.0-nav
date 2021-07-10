@@ -165,7 +165,7 @@ export default {
         },
       });
     };
-    // 获取token
+    // 获取token 首先获取token用户submit时校验
     const loginToken = async () => {
       try {
         const res = await API.LoginToken.request();
@@ -177,7 +177,6 @@ export default {
     };
     const autoLogin = () => {
       let res: Models.AuthRes = {};
-      // ;({ lock: true, text: "自动登录..." });
       const loading = ElLoading.service({ lock: true, text: "自动登录..." });
       AutoAuthorization()
         .then(async (res: any) => {

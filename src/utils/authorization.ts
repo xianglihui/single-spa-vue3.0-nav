@@ -2,6 +2,7 @@ import { AUTO_AUTH_PATH, AUTH_PATH } from "@/utils/env";
 import axios from "axios";
 import * as Models from "@/models/Models";
 import { HttpResource, HttpMethod } from "@/utils/http";
+// 自动登录
 export async function AutoAuthorization() {
   const config = {
     withCredentials: true,

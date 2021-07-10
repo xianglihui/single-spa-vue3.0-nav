@@ -4,6 +4,11 @@
       "token": "2333"
     }
   ],
+  "auto/token":[
+    {
+      "token": "1111"
+    }
+  ],
   "getPermissions": [
     {
       "userid": "123456789",
