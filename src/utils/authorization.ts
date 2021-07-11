@@ -37,6 +37,15 @@ export async function Authorization(options: Models.AuthReq) {
     return {};
   }
 }
+// 权限
+export async function Premission() {
+  let serve = new HttpResource<Models.Premissions>(HttpMethod.Get, AUTH_PATH + "/getPermissions")
+  let res = await serve.request()
+  let jstr = JSON.stringify(res.permission)
+  localStorage.setItem("premission", jstr)
+  sessionStorage.setItem("premission", jstr)
+  return res
+}
 // 获取菜单
 export function GetMenuItems() {
   console.log("菜单");
