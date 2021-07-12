@@ -31,30 +31,32 @@ service.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (error.response.status === 401) {
-      ElMessage({
-        message: "登录失效，请重新登录",
-        type: "error",
-        onClose: () => {
-          localStorage.clear();
-          sessionStorage.clear();
-          window.location.href = "/login";
-        },
-      });
-    } else if (error.response.status === 400) {
-      if (
-        error.response.data.error_description &&
-        error.response.data.error_description ===
-          "RequiredPhoneVerificationCode"
-      ) {
-        ElMessage.error("请验证手机验证码");
-      } else {
-        ElMessage.error(error.response.data.error_description);
-      }
-    } else {
-      ElMessage.error("请求失败，请查看控制台提示");
-    }
-    return Promise.reject(error);
+    console.log("error", error);
+    // 由于捕获json-server捕获不了错误日志 这里视实际项目需求而定 2021-07-12
+    // if (error.response.status === 401) {
+    //   ElMessage({
+    //     message: "登录失效，请重新登录",
+    //     type: "error",
+    //     onClose: () => {
+    //       localStorage.clear();
+    //       sessionStorage.clear();
+    //       window.location.href = "/login";
+    //     },
+    //   });
+    // } else if (error.response.status === 400) {
+    //   if (
+    //     error.response.data.error_description &&
+    //     error.response.data.error_description ===
+    //       "RequiredPhoneVerificationCode"
+    //   ) {
+    //     ElMessage.error("请验证手机验证码");
+    //   } else {
+    //     ElMessage.error(error.response.data.error_description);
+    //   }
+    // } else {
+    //   ElMessage.error("请求失败，请查看控制台提示");
+    // }
+    // return Promise.reject(error);
   }
 );
 

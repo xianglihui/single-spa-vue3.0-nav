@@ -7,9 +7,9 @@ enum loginType {
 
 const AppOps: any = {
   "localhost:3000": {
-    name: "LONSID PA",
-    title: "朗诗德PA",
-    app: "PA",
+    name: "localA",
+    title: "localA",
+    app: "A",
     isAutoLogin: true,
     isOpenNews: true,
     login: [
@@ -22,7 +22,7 @@ const AppOps: any = {
   localhost: {
     name: "localhost",
     title: "LocalHost",
-    app: "PA",
+    app: "A",
     isAutoLogin: false,
     isOpenNews: false,
     login: [
@@ -31,7 +31,7 @@ const AppOps: any = {
         lable: loginType.account,
       },
     ],
-    isVerificationCode: true,
+    isVerificationCode: true, // 是否需要验证码
   },
 };
 
@@ -42,9 +42,7 @@ export const App_Name: string = AppOps[location.hostname].app; //应用名称，
 
 // 接口地址
 export const AJAX_PATH: string =
-  env === "development"
-    ? "http://localhost:3001"
-    : "http://soa.lonsid.cn/api/";
+  env === "development" ? "http://localhost:3001" : "http://soa.lonsid.cn/api/";
 
 // 管理平台地址
 export const WEB_PATH: string =
@@ -56,24 +54,16 @@ export const OS_PATH: string =
 
 // 门户网站地址
 export const PORTAL_PATH: string =
-  env === "development"
-    ? "http://localhost:3001"
-    : "";
+  env === "development" ? "http://localhost:3001" : "";
 
 // 通用服务
 export const GeneralService: string =
-  env === "development"
-    ? "http://localhost:3001"
-    : "";
+  env === "development" ? "http://localhost:3001" : "";
 
 //  登录认证地址
 export const AUTH_PATH: string =
-  env === "development"
-    ? "http://localhost:3001"
-    : "";
+  env === "development" ? "http://localhost:3001" : "";
 
 //  自动登录认证地址
 export const AUTO_AUTH_PATH: string =
-  env === "development"
-    ? "http://localhost:3001"
-    : "";
+  env === "development" ? "http://localhost:3001" : "";

@@ -24,6 +24,25 @@
                 @keyup.enter="submitForm"
               ></el-input>
             </el-form-item>
+            <!--isVerificationCode判断是否需要验证码  -->
+            <el-form-item
+              label="验证码"
+              prop="imageVerficationCode"
+              v-if="isVerificationCode"
+            >
+              <el-input
+                class="code"
+                type="text"
+                v-model="loginForm.imageVerficationCode"
+                @keyup.enter="submitForm"
+              ></el-input>
+              <img
+                :src="imageCodeRes.imageBase64"
+                alt=""
+                class="code-img"
+                @click="getImgCode"
+              />
+            </el-form-item>
             <el-form-item
               v-for="(item, key) in logins"
               :key="key"
@@ -47,17 +66,20 @@ import {
   AutoAuthorization,
   Authorization,
   GetMenuItems,
+  Premission,
+  userInfo,
 } from "@/utils/authorization";
 import { AUTO_AUTH_PATH, AppConfig } from "@/utils/env";
 import { useRoute } from "vue-router";
 import { ElLoading, ElMessage } from "element-plus";
 import * as API from "@/api";
+
 export default {
   setup() {
     const state = reactive({
       loginForm: {
-        username: "",
-        password: "",
+        // username: "",
+        // password: "",
       } as Models.AuthReq,
       rules: {
         username: [
@@ -75,8 +97,13 @@ export default {
           },
         ],
       },
-      logins: AppConfig.login || [],
-      title: AppConfig.title || "",
+      logins: AppConfig.login || [], //localhost {action: "account", lable: "账号登录"}
+      title: AppConfig.title || "", //header标题
+      isVerificationCode: AppConfig.isVerificationCode || false, //是否需要验证码
+      imageCodeRes: {
+        imageBase64: "",
+        token: "",
+      },
       token: "",
     });
     // account账号密码登录 domain域账号登录
@@ -93,23 +120,28 @@ export default {
           break;
       }
     };
-    // 提交
-    const submitForm = () => {
-      state.loginForm.validate(async (valid: boolean) => {
-        if (valid) {
-          // const loading = this.$loading({ lock: true });
-          state.loginForm.grant_type = "password";
-          state.loginForm.client_id = "Portal";
-          state.loginForm.client_secret =
-            "4b0e4e4c-a86e-4759-ad08-b9ea0558aa6d";
-          state.loginForm.scope = "PortalAPI offline_access";
-          await login();
-          // loading.close();
-        } else {
-          return false;
-        }
-        console.log("state", state.loginForm);
-      });
+    // 账号密码登录
+    const submitForm = async () => {
+      // state.loginForm.validate(async (valid: boolean) => {
+      // if (valid) {
+      const loading = ElLoading.service({ lock: true });
+      state.loginForm.grant_type = "password";
+      state.loginForm.client_id = "localA";
+      state.loginForm.client_secret = "1";
+      state.loginForm.scope = "1";
+
+      // 验证码
+      if (state.isVerificationCode) {
+        state.loginForm.imageVerficationToken = state.imageCodeRes.token;
+      }
+      // 登录
+      await login();
+      loading.close();
+      // } else {
+      //   return false;
+      // }
+      console.log("state", state.loginForm);
+      // });
     };
     // 域账号登录
     const domainLogin = () => {
@@ -132,23 +164,37 @@ export default {
     // 登录
     const login = async () => {
       let res: Models.AuthRes = {};
-      // 自动登录
+      // 授权登录
       await Authorization(state.loginForm).then(async (res: Models.AuthRes) => {
-        // await this.saveToken(res.access_token || "");
+        await saveToken(res.access_token || "");
       });
       return true;
     };
+    // 初始化
     const init = () => {
       loginToken();
     };
     // 用户权限
-    const getPremission = () => {
-      console.log('用户权限')
+    const getPremission = async () => {
+      sessionStorage.removeItem("prem");
+      const res = await Premission();
+      if (res.permission) {
+        let prem: { [key: string]: string | number } = {};
+        res.permission.map((e: string) => {
+          prem[e] = 1;
+        });
+        sessionStorage.setItem("prem", JSON.stringify(prem));
+        // this.$store.commit("updatePrem", { prem })
+      }
+      console.log("用户权限");
     };
     // 用户信息
-    const getUserInfo = () => {
-      console.log('用户信息')
+    const getUserInfo = async () => {
+      console.log("用户信息");
+      const res = await userInfo();
+      console.log("用户信息", res);
     };
+    // 存取信息 自动登录与授权登录公用
     const saveToken = async (token: string) => {
       ElMessage({
         message: "登录成功",
@@ -169,10 +215,15 @@ export default {
     const loginToken = async () => {
       try {
         const res = await API.LoginToken.request();
+        // 验证码 动态
+        state.imageCodeRes.imageBase64 =
+          "data:image/jpeg;base64," + res.imageBase64;
+        // token 用于登录校验
+        state.imageCodeRes.token = res.token;
         // state.token = res.token;
         // }
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     };
     const autoLogin = () => {
@@ -205,6 +256,7 @@ export default {
     return {
       ...toRefs(state),
       submitForm,
+      submitLogin,
     };
   },
 };
@@ -273,6 +325,14 @@ export default {
         }
         .el-button {
           width: 100%;
+        }
+        .code {
+          width: 180px;
+        }
+        .code-img {
+          width: 100px;
+          height: 40px;
+          float: right;
         }
       }
     }
