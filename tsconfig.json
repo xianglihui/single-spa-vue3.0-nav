@@ -1,10 +1,11 @@
 {
-  "compilerOptions": {
+  "compilerOptions": { // 告诉TypeScript具体如何编译成js文件
     "target": "esnext",
     "module": "esnext",
-    "strict": true,
+    "strict": true, // 按照TypeScript最严格的规范来写 
     "jsx": "preserve",
-    "importHelpers": true,
+    // "noImplicitAny":true,
+    // "importHelpers": true, // 值就算是 any（任意值），你也要进行类型注释。
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "skipLibCheck": true,
@@ -27,14 +28,14 @@
       "scripthost"
     ]
   },
-  "include": [
+  "include": [ // 指定要编译的文件
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
   ],
-  "exclude": [
+  "exclude": [ // 不包含
     "node_modules"
   ]
 }
