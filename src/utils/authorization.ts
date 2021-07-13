@@ -35,8 +35,8 @@ export async function Authorization(options: Models.AuthReq) {
   }
   params = params.substring(1, params.length);
   const serve = new HttpResource<Models.AuthRes>(
-    HttpMethod.Post,
-    AUTH_PATH + "/token"
+    HttpMethod.Get,
+    AUTH_PATH + "/authorization"
   );
   const res = await serve.request(params);
   if (res.access_token) {

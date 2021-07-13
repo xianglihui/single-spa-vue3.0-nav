@@ -172,7 +172,7 @@ export default {
     };
     // 初始化
     const init = () => {
-      loginToken();
+      initToken();
     };
     // 用户权限
     const getPremission = async () => {
@@ -196,6 +196,7 @@ export default {
     };
     // 存取信息 自动登录与授权登录公用
     const saveToken = async (token: string) => {
+      console.log("token",token)
       ElMessage({
         message: "登录成功",
         type: "success",
@@ -212,9 +213,9 @@ export default {
       });
     };
     // 获取token 首先获取token用户submit时校验
-    const loginToken = async () => {
+    const initToken = async () => {
       try {
-        const res = await API.LoginToken.request();
+        const res = await API.initToken.request();
         // 验证码 动态
         state.imageCodeRes.imageBase64 =
           "data:image/jpeg;base64," + res.imageBase64;
@@ -249,9 +250,9 @@ export default {
     onMounted(async () => {
       // 初始化
       init();
-      if (AppConfig.isAutoLogin && !route.query.reLogin) {
-        autoLogin();
-      }
+      // if (AppConfig.isAutoLogin && !route.query.reLogin) {
+      //   autoLogin();
+      // }
     });
     return {
       ...toRefs(state),
@@ -265,7 +266,7 @@ export default {
 .login {
   width: 100%;
   height: 100vh;
-  background-image: url('../assets/img/bg.jpg');
+  // background-image: url('../assets/img/bg.jpg');
   // background-repeat: no-repeat;
   background-size: cover;
   position: relative;

@@ -14,6 +14,7 @@ export interface State {
   companyInfo: any;
   isLogin: boolean;
 }
+
 if (AppConfig.isOpenNews) {
   sessionStorage.setItem(
     "premission",
@@ -61,43 +62,43 @@ function deepClone(obj: any) {
 
 // getters
 const getters: any = {
-  navIndex: (st: Record<string, unknown>) => {
+  navIndex: (st: State) => {
     return st["navIndex"];
   },
-  getIsShowCfg: (st: Record<string, unknown>) => {
+  getIsShowCfg: (st: State) => {
     return st["isShowCfg"];
   },
-  getNavCollapse: (st: Record<string, unknown>) => {
+  getNavCollapse: (st: State) => {
     return st["isNavCollapse"];
   },
-  getTopCollapse: (st: Record<string, unknown>) => {
+  getTopCollapse: (st: State) => {
     return st["isTopCollapse"];
   },
-  getCrumbs: (st: Record<string, unknown>) => {
+  getCrumbs: (st: State) => {
     return st["crumbs"];
   },
-  getCurMenu: (st: Record<string, unknown>) => {
+  getCurMenu: (st: State) => {
     return st["curMenu"];
   },
-  getUserInfo: (st: Record<string, unknown>) => {
+  getUserInfo: (st: State) => {
     return st["userInfo"];
   },
-  prem: (st: Record<string, unknown>) => {
+  prem: (st: State) => {
     return st["prem"];
   },
-  premMenu: (st: Record<string, unknown>) => {
+  premMenu: (st: State) => {
     return st["premMenu"];
   },
-  Menus: (st: Record<string, unknown>) => {
+  Menus: (st: State) => {
     return st["Menus"];
   },
-  companyInfo: (st: Record<string, unknown>) => {
+  companyInfo: (st: State) => {
     return st["companyInfo"];
   },
-  isLogin: (st: Record<string, unknown>) => {
+  isLogin: (st: State) => {
     return st["isLogin"];
   },
-  isMobile: (st: Record<string, unknown>) => {
+  isMobile: (st: State) => {
     return st["isMobile"];
   },
 };
