@@ -110,5 +110,5 @@ export interface UserInfoNew {
 
 export interface Code {
   token: string;
-  imageBase64:string;
+  imageBase64: string;
 }

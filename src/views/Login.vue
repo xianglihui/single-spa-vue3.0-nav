@@ -73,6 +73,7 @@ import { AUTO_AUTH_PATH, AppConfig } from "@/utils/env";
 import { useRoute } from "vue-router";
 import { ElLoading, ElMessage } from "element-plus";
 import * as API from "@/api";
+import { useStore } from "vuex";
 
 export default {
   setup() {
@@ -106,6 +107,8 @@ export default {
       },
       token: "",
     });
+    // vuex
+    const store = useStore();
     // account账号密码登录 domain域账号登录
     const submitLogin = (type: string) => {
       switch (type) {
@@ -172,6 +175,12 @@ export default {
     };
     // 初始化
     const init = () => {
+      // 清理缓存
+      localStorage.clear();
+      sessionStorage.clear();
+      // 重置状态
+      store.commit("resetState");
+      // console.log("useStore", useStore);
       initToken();
     };
     // 用户权限
@@ -196,18 +205,23 @@ export default {
     };
     // 存取信息 自动登录与授权登录公用
     const saveToken = async (token: string) => {
-      console.log("token",token)
+      console.log("token", token);
       ElMessage({
         message: "登录成功",
         type: "success",
         duration: 1000,
         onClose: async () => {
+          // 存token
           localStorage.setItem("token", token);
           sessionStorage.setItem("token", token);
+          // 权限
           getPremission();
+          // 用户信息
           getUserInfo();
+          // 存用户信息
           localStorage.setItem("userAccount", state.loginForm.username);
           sessionStorage.setItem("userAccount", state.loginForm.username);
+          // 菜单
           const menus = await GetMenuItems();
         },
       });

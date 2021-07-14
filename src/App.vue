@@ -1,9 +1,22 @@
 <template>
-  <nav-header v-if="isHideMenu"></nav-header>
-  <router-view />
+  <!-- 顶部面包屑 -->
+  <nav-header v-if="!isHideMenu"></nav-header>
+  <div>
+    <!-- <nav-aside v-show="!isHideMenu" v-if="!$store.getters.isMobile"></nav-aside> -->
+    <div
+      class="moduleContent navCollapse"
+      :style="{
+        width: `calc( 100% - ${navWidth}px)`,
+        top: `${isLogin ? 46 : 0}px`,
+      }"
+    >
+      <router-view />
+    </div>
+  </div>
+  <!-- <router-view /> -->
 </template>
 <script lang="ts">
-import { reactive, toRefs } from "vue";
+import { onMounted, reactive, toRefs } from "vue";
 import NavHeader from "@/components/NavHeader.vue";
 export default {
   components: {
@@ -11,7 +24,24 @@ export default {
   },
   setup() {
     const state = reactive({
-      isHideMen: false,
+      isHideMen: true,
+      navWidth: 100,
+      isLogin: true,
+      erd: "",
+    });
+    // isLogin(){
+    //     return this.store.getters.isLogin
+    // }
+    onMounted(async () => {
+      // 初始化
+      // setInterval(() => {
+      //   state.erd.listenTo(
+      //     document.getElementsByClassName("leftNav"),
+      //     (element: any) => {
+      //       state.navWidth = element.offsetWidth - 1;
+      //     }
+      //   );
+      // }, 100);
     });
     return {
       ...toRefs(state),
@@ -39,6 +69,18 @@ export default {
     &.router-link-exact-active {
       color: #42b983;
     }
+  }
+}
+.moduleContent {
+  width: calc(100% - 65px);
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+  .navCollapse {
+    -moz-transition: width 0.3s linear;
+    -webkit-transition: width 0.3s linear;
+    transition: width 0.3s linear;
   }
 }
 </style>

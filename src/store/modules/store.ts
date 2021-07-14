@@ -8,7 +8,7 @@ export interface State {
   crumbs: string;
   curMenu: string;
   userInfo: any;
-  prem: {};
+  prem: Record<string, unknown>;
   premMenu: never[];
   Menus: any;
   companyInfo: any;
@@ -54,7 +54,7 @@ const state = {
 const copyState = deepClone(state); // 拷贝state对象
 function deepClone(obj: any) {
   const newObj: Record<string, unknown> | any = obj instanceof Array ? [] : {};
-  for (var i in obj) {
+  for (const i in obj) {
     newObj[i] = typeof obj[i] === "object" ? deepClone(obj[i]) : obj[i];
   }
   return newObj;
@@ -159,7 +159,8 @@ const mutations: any = {
     state["companyInfo"] = info["companyInfo"];
   },
   resetState(state: any) {
-    for (var i in copyState) {
+    console.log("resetState", state);
+    for (const i in copyState) {
       state[i] = copyState[i]; // 递归赋值
     }
   },

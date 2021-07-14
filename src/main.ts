@@ -4,6 +4,7 @@ import App from "./App.vue";
 import router from "./router";
 import "@/assets/common.css";
 import "element-plus/lib/theme-chalk/index.css";
+import store from "@/store/index";
 import ElementPlus from "element-plus";
 const vueLifecycles = singleSpaVue({
   createApp,
@@ -23,6 +24,7 @@ const vueLifecycles = singleSpaVue({
   },
   handleInstance(app) {
     app.use(router);
+    app.use(store);
     app.use(ElementPlus);
   },
 });
