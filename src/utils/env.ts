@@ -35,7 +35,6 @@ const AppOps: any = {
   },
 };
 
-console.log("location.hostname", location.hostname);
 export const AppConfig: any = AppOps[location.hostname];
 
 export const App_Name: string = AppOps[location.hostname].app; //应用名称，获取菜单

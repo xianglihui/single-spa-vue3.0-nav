@@ -1,10 +1,10 @@
 <template>
   <div id="outsideMenu">
-    <div
+    <!-- <div
       class="topMenu el-icon-menu"
       :title="titleTip"
       @click="collapseNavMenu"
-    ></div>
+    ></div> -->
     <!--  -->
     <!-- <extend-nav @collapseNavMenu="collapseNavMenu" :popoverData="popoverData" :popoverOutsideData="popoverOutsideData"></extend-nav> -->
   </div>

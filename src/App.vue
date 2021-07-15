@@ -1,6 +1,6 @@
 <template>
   <!-- 顶部面包屑 -->
-  <nav-header v-if="!isHideMenu"></nav-header>
+  <nav-header v-if="isHideMenu"></nav-header>
   <div>
     <!-- <nav-aside v-show="!isHideMenu" v-if="!$store.getters.isMobile"></nav-aside> -->
     <div
@@ -12,26 +12,58 @@
     >
       <router-view />
     </div>
+    <div class="moduleContent navCollapse" v-show="isHideMenu">
+      <div id="root_app1"></div>
+    </div>
   </div>
   <!-- <router-view /> -->
 </template>
 <script lang="ts">
-import { onMounted, reactive, toRefs } from "vue";
+import { onMounted, reactive, toRefs, watch } from "vue";
+// import { onBeforeRouteUpdate } from "vue-router";
 import NavHeader from "@/components/NavHeader.vue";
+import { useStore } from "vuex";
+import { useRoute } from "vue-router";
+import { GetMenuItems } from "@/utils/authorization";
 export default {
   components: {
     NavHeader,
   },
   setup() {
     const state = reactive({
-      isHideMen: true,
+      isHideMenu: false,
       navWidth: 100,
       isLogin: true,
       erd: "",
     });
+    const store = useStore();
+    const route = useRoute();
     // isLogin(){
     //     return this.store.getters.isLogin
     // }
+    // 路由监听 判断是否需要隐藏优惠券
+    // onBeforeRouteUpdate(async (to) => {
+    //   if (to.meta.isLogin) {
+    //     state.isHideMenu = true;
+    //     const menus = await GetMenuItems();
+    //     store.commit("updateMenus", { Menus: menus });
+    //   } else {
+    //     state.isHideMenu = false;
+    //   }
+    // });
+    watch(route, async (newval, oldval) => {
+      console.log("watch监听route.meta", route.meta);
+      if (route.meta.isLogin) {
+        state.isHideMenu = true;
+        const menus = await GetMenuItems();
+        store.commit("updateMenus", { Menus: menus });
+      } else {
+        state.isHideMenu = false;
+        console.log('state.isHideMenu',state.isHideMenu)
+        // sessionStorage.clear();
+        // localStorage.clear();
+      }
+    });
     onMounted(async () => {
       // 初始化
       // setInterval(() => {

@@ -173,14 +173,16 @@ export default {
       });
       return true;
     };
-    // 初始化
+    // onMounted 初始化
     const init = () => {
       // 清理缓存
       localStorage.clear();
       sessionStorage.clear();
       // 重置状态
       store.commit("resetState");
-      // console.log("useStore", useStore);
+      // 更新登录状态
+      store.commit("updateIsLogin", { isLogin: false });
+      // 拿imgCode & token
       initToken();
     };
     // 用户权限

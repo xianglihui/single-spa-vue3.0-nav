@@ -49,7 +49,7 @@ const state = {
   companyInfo: sessionStorage.getItem("companyinfo")
     ? JSON.parse(sessionStorage.getItem("companyinfo") || "{}")
     : "",
-  isLogin: sessionStorage.getItem("userinfo") ? true : false,
+  isLogin: sessionStorage.getItem("userinfo") ? true : false, //登录状态
 };
 const copyState = deepClone(state); // 拷贝state对象
 function deepClone(obj: any) {
@@ -159,13 +159,14 @@ const mutations: any = {
     state["companyInfo"] = info["companyInfo"];
   },
   resetState(state: any) {
-    console.log("resetState", state);
+    console.log("重置State", copyState);
     for (const i in copyState) {
       state[i] = copyState[i]; // 递归赋值
     }
   },
-  updateIsLogin(state: Record<string, unknown>, info: Record<string, unknown>) {
-    state["isLogin"] = info["isLogin"];
+  updateIsLogin(state: State, info: State) {
+    console.log("updateIsLogin", info);
+    state["isLogin"] = info["isLogin"]; // 登录状态
   },
 };
 
