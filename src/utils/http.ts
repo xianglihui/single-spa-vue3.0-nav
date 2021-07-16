@@ -92,6 +92,8 @@ export class HttpResource<T> {
   }
 
   constructor(method: HttpMethod, apiUrl: string) {
+    console.log("method", method);
+    console.log("apiUrl", apiUrl);
     this.url = apiUrl;
     this.httpMethod = method;
   }
@@ -99,7 +101,6 @@ export class HttpResource<T> {
   private isBoxed<T>(resp: UnionResponse<T>): resp is BaseResponse<T> {
     return (<BaseResponse<T>>resp).result !== undefined;
   }
-
   async request(
     data?: Record<string, unknown> | string,
     contentType = "application/x-www-form-urlencoded"
@@ -112,6 +113,7 @@ export class HttpResource<T> {
         Authorization: "Bearer " + sessionStorage.getItem("token"),
       },
       paramsSerializer: function (params) {
+        console.log("params", params);
         return qs.stringify(params, { indices: false });
       },
     };

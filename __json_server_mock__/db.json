@@ -11,40 +11,100 @@
   "getPermissions": [
     {
       "userid": "123456789",
-      "permission": [
-        "localA.App",
-        "localA.App.index"
-      ]
+      "permission": ["localA.App", "localA.App.index"]
     }
   ],
   "getUserInfo": {
     "id": "1",
     "name": "测试用户"
   },
-  "getMenuTree": {
-    "menu": [
+  "getMenuTreesByUser": {
+    "error": null,
+    "success": true,
+    "targetUrl": null,
+    "unAuthorizedRequest": false,
+    "result": [
       {
-        "code": "",
-        "id": 1,
-        "name": "本地测试平台1",
-        "parantCode": "localA",
-        "menus": [
+        "id": "1",
+        "name": "A",
+        "code": "A",
+        "url": "http://localhost:8081/",
+        "featureType": 1,
+        "orderIndex": 8,
+        "icon": "",
+        "namePinyin": "",
+        "isCollapse": false,
+        "isShowYS": null,
+        "parentCode": "",
+        "children": [
           {
             "id": "11",
             "name": "首页",
-            "code": "localA.App.index",
-            "parentCode": "localA.App",
-            "icon": "iconfont xxx",
-            "url": "/index"
+            "code": "A.index",
+            "url": "/home",
+            "featureType": 3,
+            "orderIndex": 1,
+            "icon": "",
+            "namePinyin": "",
+            "isCollapse": false,
+            "isShowYS": null,
+            "parentCode": "A",
+            "children": [
+              {
+                "id": "111",
+                "name": "首页编辑",
+                "code": "A.index.edit",
+                "url": "/home",
+                "featureType": 3,
+                "orderIndex": 1,
+                "icon": "",
+                "namePinyin": "",
+                "isCollapse": false,
+                "isShowYS": null,
+                "parentCode": "A.index",
+                "children": []
+              },
+              {
+                "id": "112",
+                "name": "首页展示",
+                "code": "A.index.show",
+                "url": "/home",
+                "featureType": 3,
+                "orderIndex": 2,
+                "icon": "",
+                "namePinyin": "",
+                "isCollapse": false,
+                "isShowYS": null,
+                "parentCode": "A.index",
+                "children": []
+              }
+            ]
           }
         ]
-      },
-      {}
-    ],
-    "code": "localA平台"
+      }
+    ]
   },
   "authorization": {
-    "accessToken": "token",
+    "access_token": "token",
     "token_type": "Bearer"
+  },
+  "menu": {
+    "result": [
+      {
+        "chilren": [
+          {
+            "code": "A.Index",
+            "id": "2",
+            "name": "首页",
+            "url": "/index"
+          }
+        ],
+        "code": "A",
+        "icon": "",
+        "id": "1",
+        "name": "local",
+        "url": "http://localhost:8081"
+      }
+    ]
   }
 }

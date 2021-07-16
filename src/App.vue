@@ -1,6 +1,6 @@
 <template>
   <!-- 顶部面包屑 -->
-  <nav-header v-if="isHideMenu"></nav-header>
+  <nav-header v-if="!isHideMenu"></nav-header>
   <div>
     <!-- <nav-aside v-show="!isHideMenu" v-if="!$store.getters.isMobile"></nav-aside> -->
     <div
@@ -12,35 +12,34 @@
     >
       <router-view />
     </div>
-    <div class="moduleContent navCollapse" v-show="isHideMenu">
+    <div class="moduleContent navCollapse" v-show="!isHideMenu">
       <div id="root_app1"></div>
     </div>
   </div>
   <!-- <router-view /> -->
 </template>
 <script lang="ts">
-import { onMounted, reactive, toRefs, watch } from "vue";
+import { onMounted, reactive, toRefs, watch, defineComponent } from "vue";
 // import { onBeforeRouteUpdate } from "vue-router";
 import NavHeader from "@/components/NavHeader.vue";
 import { useStore } from "vuex";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { GetMenuItems } from "@/utils/authorization";
-export default {
+// definComponent主要是用来帮助Vue在TS下正确推断出setup()组件的参数类型;引入 defineComponent() 以正确推断 setup() 组件的参数类型；defineComponent 可以正确适配无 props、数组 props 等形式；
+export default defineComponent({
   components: {
     NavHeader,
   },
   setup() {
     const state = reactive({
-      isHideMenu: false,
+      isHideMenu: true,
       navWidth: 100,
       isLogin: true,
       erd: "",
     });
     const store = useStore();
     const route = useRoute();
-    // isLogin(){
-    //     return this.store.getters.isLogin
-    // }
+    const router = useRouter();
     // 路由监听 判断是否需要隐藏优惠券
     // onBeforeRouteUpdate(async (to) => {
     //   if (to.meta.isLogin) {
@@ -51,21 +50,40 @@ export default {
     //     state.isHideMenu = false;
     //   }
     // });
-    watch(route, async (newval, oldval) => {
-      console.log("watch监听route.meta", route.meta);
-      if (route.meta.isLogin) {
-        state.isHideMenu = true;
-        const menus = await GetMenuItems();
-        store.commit("updateMenus", { Menus: menus });
-      } else {
-        state.isHideMenu = false;
-        console.log('state.isHideMenu',state.isHideMenu)
-        // sessionStorage.clear();
-        // localStorage.clear();
-      }
-    });
+    const useWatch = () => {
+      watch(route, async (newval, oldval) => {
+        console.log("watch监听route.meta", route);
+        // Object.prototype.hasOwnProperty.call(foo, “bar”)
+        if (Object.prototype.hasOwnProperty.call(route.meta, "isLogin")) {
+          console.log("监听router的跳转");
+          state.isHideMenu = true;
+        } else {
+          state.isHideMenu = false;
+        }
+      });
+    };
+    useWatch();
+    // isLogin(){
+    //     return this.store.getters.isLogin
+    // }
+    // watch(
+    //   () => store,
+    //   (val, old) => {
+    //     console.log("watch监听store", store);
+    //   }
+    // );
     onMounted(async () => {
-      // 初始化
+      // 如果当前路由meta上不存在isLogin
+      if (!Object.prototype.hasOwnProperty.call(route.meta, "isLogin")) {
+        if (sessionStorage.getItem("token")) {
+          const menus = await GetMenuItems();
+          store.commit("updateMenus", { Menus: menus });
+        } else {
+          sessionStorage.clear();
+          localStorage.clear();
+          router.push({ path: "/login" });
+        }
+      }
       // setInterval(() => {
       //   state.erd.listenTo(
       //     document.getElementsByClassName("leftNav"),
@@ -80,7 +98,7 @@ export default {
       // getTestInfo,
     };
   },
-};
+});
 </script>
 <style lang="less">
 #app {

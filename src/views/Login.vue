@@ -61,7 +61,7 @@
 
 <script lang="ts">
 import * as Models from "@/models/Models";
-import { reactive, toRefs, onMounted, ref } from "vue";
+import { reactive, toRefs, onMounted, ref, defineComponent } from "vue";
 import {
   AutoAuthorization,
   Authorization,
@@ -70,12 +70,12 @@ import {
   userInfo,
 } from "@/utils/authorization";
 import { AUTO_AUTH_PATH, AppConfig } from "@/utils/env";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { ElLoading, ElMessage } from "element-plus";
 import * as API from "@/api";
 import { useStore } from "vuex";
 
-export default {
+export default defineComponent({
   setup() {
     const state = reactive({
       loginForm: {
@@ -109,6 +109,7 @@ export default {
     });
     // vuex
     const store = useStore();
+    const router = useRouter();
     // account账号密码登录 domain域账号登录
     const submitLogin = (type: string) => {
       switch (type) {
@@ -169,6 +170,7 @@ export default {
       let res: Models.AuthRes = {};
       // 授权登录
       await Authorization(state.loginForm).then(async (res: Models.AuthRes) => {
+        console.log("授权登录", res);
         await saveToken(res.access_token || "");
       });
       return true;
@@ -188,6 +190,7 @@ export default {
     // 用户权限
     const getPremission = async () => {
       sessionStorage.removeItem("prem");
+      // 获取用户权限
       const res = await Premission();
       if (res.permission) {
         let prem: { [key: string]: string | number } = {};
@@ -195,7 +198,7 @@ export default {
           prem[e] = 1;
         });
         sessionStorage.setItem("prem", JSON.stringify(prem));
-        // this.$store.commit("updatePrem", { prem })
+        // store.commit("updatePrem", { prem })
       }
       console.log("用户权限");
     };
@@ -217,14 +220,40 @@ export default {
           localStorage.setItem("token", token);
           sessionStorage.setItem("token", token);
           // 权限
-          getPremission();
+          await getPremission();
           // 用户信息
-          getUserInfo();
+          await getUserInfo();
           // 存用户信息
           localStorage.setItem("userAccount", state.loginForm.username);
           sessionStorage.setItem("userAccount", state.loginForm.username);
           // 菜单
           const menus = await GetMenuItems();
+          console.log("菜单", menus);
+          if (menus.length == 0) {
+            ElMessage({
+              message: "账号权限不足，请联系管理员设置权限",
+              type: "error",
+              duration: 3000,
+            });
+          } else {
+            store.commit("updateMenus", { Menus: menus });
+            store.commit("updateNavIndex", 0);
+            store.commit("updateIsLogin", { isLogin: true });
+            console.log("updateIsLogin", store);
+            console.log(menus, "路由");
+            console.log(
+              "menus[0].subMenu[0].subMenu",
+              menus[0].subMenu[0].subMenu
+            );
+            // console.log("menus[0].subMenu[0].subMenu[0].path",menus[0].subMenu[0].subMenu[0].path)
+            console.log("subMenu[0].path", menus[0].subMenu[0].path);
+            // router.push(
+            //   menus[0].subMenu[0].subMenu
+            //     ? menus[0].subMenu[0].subMenu[0].path
+            //     : menus[0].subMenu[0].path
+            // );
+            router.push("/home");
+          }
         },
       });
     };
@@ -243,11 +272,13 @@ export default {
         console.log(error);
       }
     };
+    // 自动登录
     const autoLogin = () => {
       let res: Models.AuthRes = {};
       const loading = ElLoading.service({ lock: true, text: "自动登录..." });
       AutoAuthorization()
         .then(async (res: any) => {
+          console.log("res", res);
           saveToken(res.access_token || "");
           loading.close();
         })
@@ -276,7 +307,7 @@ export default {
       submitLogin,
     };
   },
-};
+});
 </script>
 <style lang="less" scoped>
 .login {
