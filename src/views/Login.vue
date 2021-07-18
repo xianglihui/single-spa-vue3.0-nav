@@ -107,6 +107,8 @@ export default defineComponent({
       },
       token: "",
     });
+    // const val = ref(1);
+    // console.log("val", val.value);
     // vuex
     const store = useStore();
     const router = useRouter();
@@ -247,12 +249,13 @@ export default defineComponent({
             );
             // console.log("menus[0].subMenu[0].subMenu[0].path",menus[0].subMenu[0].subMenu[0].path)
             console.log("subMenu[0].path", menus[0].subMenu[0].path);
+           console.log('hhhhhhhhhhh')
             // router.push(
             //   menus[0].subMenu[0].subMenu
             //     ? menus[0].subMenu[0].subMenu[0].path
             //     : menus[0].subMenu[0].path
             // );
-            router.push("/home");
+            router.push("/h");
           }
         },
       });
@@ -312,10 +315,11 @@ export default defineComponent({
 <style lang="less" scoped>
 .login {
   width: 100%;
-  height: 100vh;
+  height: 100%;
+  // height: 100vh;
   // background-image: url('../assets/img/bg.jpg');
   // background-repeat: no-repeat;
-  background-size: cover;
+  // background-size: cover;
   position: relative;
   display: -webkit-box;
   display: -ms-flexbox;

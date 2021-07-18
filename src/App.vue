@@ -1,4 +1,11 @@
 <template>
+  <!-- 异步加载 -->
+  <!-- <Suspense>
+    <template #default>
+    </template>
+    <template #fallback>
+    </template>
+  </Suspense> -->
   <!-- 顶部面包屑 -->
   <nav-header v-if="!isHideMenu"></nav-header>
   <div>
@@ -13,7 +20,7 @@
       <router-view />
     </div>
     <div class="moduleContent navCollapse" v-show="!isHideMenu">
-      <div id="root_app1"></div>
+      <main-app />
     </div>
   </div>
   <!-- <router-view /> -->
@@ -22,6 +29,7 @@
 import { onMounted, reactive, toRefs, watch, defineComponent } from "vue";
 // import { onBeforeRouteUpdate } from "vue-router";
 import NavHeader from "@/components/NavHeader.vue";
+import MainApp from "@/components/Main.vue";
 import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 import { GetMenuItems } from "@/utils/authorization";
@@ -29,6 +37,7 @@ import { GetMenuItems } from "@/utils/authorization";
 export default defineComponent({
   components: {
     NavHeader,
+    MainApp,
   },
   setup() {
     const state = reactive({
@@ -40,20 +49,9 @@ export default defineComponent({
     const store = useStore();
     const route = useRoute();
     const router = useRouter();
-    // 路由监听 判断是否需要隐藏优惠券
-    // onBeforeRouteUpdate(async (to) => {
-    //   if (to.meta.isLogin) {
-    //     state.isHideMenu = true;
-    //     const menus = await GetMenuItems();
-    //     store.commit("updateMenus", { Menus: menus });
-    //   } else {
-    //     state.isHideMenu = false;
-    //   }
-    // });
     const useWatch = () => {
       watch(route, async (newval, oldval) => {
         console.log("watch监听route.meta", route);
-        // Object.prototype.hasOwnProperty.call(foo, “bar”)
         if (Object.prototype.hasOwnProperty.call(route.meta, "isLogin")) {
           console.log("监听router的跳转");
           state.isHideMenu = true;
@@ -72,8 +70,13 @@ export default defineComponent({
     //     console.log("watch监听store", store);
     //   }
     // );
+
     onMounted(async () => {
+      (window as any).route = (path: string, query: any = {}) => {
+        // router.push({ path, query: query });
+      };
       // 如果当前路由meta上不存在isLogin
+      // console.log("route.meta",route.meta)
       if (!Object.prototype.hasOwnProperty.call(route.meta, "isLogin")) {
         if (sessionStorage.getItem("token")) {
           const menus = await GetMenuItems();
@@ -81,7 +84,8 @@ export default defineComponent({
         } else {
           sessionStorage.clear();
           localStorage.clear();
-          router.push({ path: "/login" });
+          console.log("如果当前路由meta上不存在isLogin时触发router.push--login");
+          // router.push({ path: "/login" });
         }
       }
       // setInterval(() => {

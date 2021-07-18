@@ -25,14 +25,14 @@ service.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-
+// 场景1：对token没有要求逻辑
 service.interceptors.response.use(
   (response) => {
     return response;
   },
   (error) => {
     console.log("error", error);
-    // 由于捕获json-server捕获不了错误日志 这里视实际项目需求而定 2021-07-12
+    // 由于json-server mock捕获不了错误日志 这里视实际项目需求而定 2021-07-12
     // if (error.response.status === 401) {
     //   ElMessage({
     //     message: "登录失效，请重新登录",
@@ -47,7 +47,7 @@ service.interceptors.response.use(
     //   if (
     //     error.response.data.error_description &&
     //     error.response.data.error_description ===
-    //       "RequiredPhoneVerificationCode"
+    //       "noCode"
     //   ) {
     //     ElMessage.error("请验证手机验证码");
     //   } else {
@@ -59,6 +59,55 @@ service.interceptors.response.use(
     // return Promise.reject(error);
   }
 );
+// 场景2：无感刷新token逻辑
+// 是否正在刷新的标记
+// let isRefreshing = false;
+// //重试队列
+// let requests = [];
+// service.interceptors.response.use(
+//   (response) => {
+//     //约定code 409 token 过期
+//     if (response.data.code === 409) {
+//       if (!isRefreshing) {
+//         isRefreshing = true;
+//         //调用刷新token的接口
+//         return refreshToken({
+//           refreshToken: localStorage.getItem("refreshToken"),
+//           token: getToken(),
+//         })
+//           .then((res) => {
+//             const { token } = res.data;
+//             // 替换token
+//             setToken(token);
+//             response.headers.Authorization = `${token}`;
+//           })
+//           .catch((err) => {
+//             //跳到登录页
+//             removeToken();
+//             router.push("/login");
+//             return Promise.reject(err);
+//           })
+//           .finally(() => {
+//             isRefreshing = false;
+//           });
+//       } else {
+//         // 返回未执行 resolve 的 Promise
+//         return new Promise((resolve) => {
+//           // 用函数形式将 resolve 存入，等待刷新后再执行
+//           requests.push((token) => {
+//             response.headers.Authorization = `${token}`;
+//             resolve(service(response.config));
+//           });
+//         });
+//       }
+//     }
+//     return response && response.data;
+//   },
+//   (error) => {
+//     ElMessage.error(error.response.data.msg);
+//     return Promise.reject(error);
+//   }
+// );
 
 interface ResponseError {
   code: number;

@@ -28,18 +28,26 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
-
+/**
+ * 路由错误回调
+ */
+ router.onError((e: any) => {
+  console.log("error:", e);
+});
 router.beforeEach((to, from) => {
-  // console.log("to", to);
+  console.log("to", to);
+  if (to.matched.length == 0) {
+    console.log("to.path",to.path)
+  }
   // console.log("from", from);
-  if (to.path === from.path) {
-    return false;
-  }
-  if (!to.meta.isLogin || !from.meta.isLogin) {
-    if (sessionStorage.getItem("token")) {
-      console.log("--------");
-    }
-  }
+  // if (to.path === from.path) {
+  //   return false;
+  // }
+  // if (!to.meta.isLogin || !from.meta.isLogin) {
+  //   if (sessionStorage.getItem("token")) {
+  //     console.log("--------");
+  //   }
+  // }
   // return false
 });
 
