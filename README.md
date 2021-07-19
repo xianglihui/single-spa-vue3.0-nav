@@ -1,6 +1,7 @@
 ### desc
 vue3.0+ts+single-spa搭建的子项目导航系统
 ### 目录结构
+```
 |-- README.md
 |-- __json_server_mock__
 |   `-- db.json
@@ -41,3 +42,4 @@ vue3.0+ts+single-spa搭建的子项目导航系统
 |       |-- About.vue
 |       `-- Login.vue
 `-- tsconfig.json
+```
