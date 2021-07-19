@@ -31,13 +31,13 @@ const router = createRouter({
 /**
  * 路由错误回调
  */
- router.onError((e: any) => {
+router.onError((e: any) => {
   console.log("error:", e);
 });
 router.beforeEach((to, from) => {
   console.log("to", to);
   if (to.matched.length == 0) {
-    console.log("to.path",to.path)
+    console.log("to.path", to.path);
   }
   // console.log("from", from);
   // if (to.path === from.path) {

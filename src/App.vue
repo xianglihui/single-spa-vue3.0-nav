@@ -1,15 +1,8 @@
 <template>
-  <!-- 异步加载 -->
-  <!-- <Suspense>
-    <template #default>
-    </template>
-    <template #fallback>
-    </template>
-  </Suspense> -->
   <!-- 顶部面包屑 -->
   <nav-header v-if="!isHideMenu"></nav-header>
   <div>
-    <!-- <nav-aside v-show="!isHideMenu" v-if="!$store.getters.isMobile"></nav-aside> -->
+    <nav-aside v-if="!isHideMenu"></nav-aside>
     <div
       class="moduleContent navCollapse"
       :style="{
@@ -29,6 +22,7 @@
 import { onMounted, reactive, toRefs, watch, defineComponent } from "vue";
 // import { onBeforeRouteUpdate } from "vue-router";
 import NavHeader from "@/components/NavHeader.vue";
+import NavAside from "@/components/NavAside.vue";
 import MainApp from "@/components/Main.vue";
 import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
@@ -37,6 +31,7 @@ import { GetMenuItems } from "@/utils/authorization";
 export default defineComponent({
   components: {
     NavHeader,
+    NavAside,
     MainApp,
   },
   setup() {
@@ -84,7 +79,9 @@ export default defineComponent({
         } else {
           sessionStorage.clear();
           localStorage.clear();
-          console.log("如果当前路由meta上不存在isLogin时触发router.push--login");
+          console.log(
+            "如果当前路由meta上不存在isLogin时触发router.push--login"
+          );
           // router.push({ path: "/login" });
         }
       }

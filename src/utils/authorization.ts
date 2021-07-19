@@ -81,7 +81,7 @@ export async function GetMenuItems() {
     return JSON.parse(res);
   } else {
     // App_Name 根据项目名称获取不同菜单列表
-    const serve = new HttpResource<Array<MenuData>>(
+    const serve = await new HttpResource<Array<MenuData>>(
       HttpMethod.Get,
       AUTH_PATH + `/getMenuTreesByUser?moduleName=${App_Name}`
     );
@@ -90,10 +90,10 @@ export async function GetMenuItems() {
     console.log("获取菜单", res);
     configMenus = [];
     if (res.length == 0) {
-      console.log("==========")
+      console.log("==========");
       return [];
     } else {
-      console.log("-----------")
+      console.log("-----------");
       const data = getNavMapMenu(res[0]["children"]); //菜单list
       sessionStorage.setItem("lsd-menus", JSON.stringify(data));
       sessionStorage.setItem("lsd-config-menus", JSON.stringify(configMenus));

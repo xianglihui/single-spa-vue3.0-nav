@@ -85,7 +85,7 @@
     ]
   },
   "authorization": {
-    "access_token": "token",
+    "access_token": "authorizationToken",
     "token_type": "Bearer"
   },
   "menu": {

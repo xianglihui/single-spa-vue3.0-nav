@@ -1,5 +1,14 @@
-const env: string | undefined = process.env.NODE_ENV;
-
+const env: string = process.env.NODE_ENV || "";
+console.log("env", process.env);
+// type Tenv = () => string;
+// export enum Eenv {
+//   development = "development",
+//   local = "local",
+//   production = "production",
+// }
+// const env: Tenv = () => {
+//   return process.env.NODE_ENV;
+// };
 enum loginType {
   domain = "域账号登录",
   account = "账号登录",

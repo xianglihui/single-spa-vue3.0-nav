@@ -11,13 +11,13 @@
             label-width="70px"
             class="ruleForm"
           >
-            <el-form-item label="账号" prop="username">
+            <el-form-item label="账号">
               <el-input
                 v-model="loginForm.username"
                 @keyup.enter="submitForm"
               ></el-input>
             </el-form-item>
-            <el-form-item label="密码" prop="password">
+            <el-form-item label="密码">
               <el-input
                 type="password"
                 v-model="loginForm.password"
@@ -208,6 +208,8 @@ export default defineComponent({
     const getUserInfo = async () => {
       console.log("用户信息");
       const res = await userInfo();
+      // 更新用户信息
+      store.commit("updateUserInfo", { userInfo: res });
       console.log("用户信息", res);
     };
     // 存取信息 自动登录与授权登录公用
@@ -249,7 +251,6 @@ export default defineComponent({
             );
             // console.log("menus[0].subMenu[0].subMenu[0].path",menus[0].subMenu[0].subMenu[0].path)
             console.log("subMenu[0].path", menus[0].subMenu[0].path);
-           console.log('hhhhhhhhhhh')
             // router.push(
             //   menus[0].subMenu[0].subMenu
             //     ? menus[0].subMenu[0].subMenu[0].path
