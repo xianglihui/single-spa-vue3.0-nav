@@ -43,11 +43,11 @@ const AppOps: any = {
     isVerificationCode: true, // 是否需要验证码
   },
 };
-
+// 设置或返回当前 URL 的主机名。
 export const AppConfig: any = AppOps[location.hostname];
+console.log("AppConfig", AppConfig);
 
 export const App_Name: string = AppOps[location.hostname].app; //应用名称，获取菜单
-
 // 接口地址
 export const AJAX_PATH: string =
   env === "development" ? "http://localhost:3001" : "http://soa.lonsid.cn/api/";

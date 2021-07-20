@@ -182,9 +182,9 @@ export default defineComponent({
       // 清理缓存
       localStorage.clear();
       sessionStorage.clear();
-      // 重置状态
+      // 重置vuex状态
       store.commit("resetState");
-      // 更新登录状态
+      // 重置登录状态
       store.commit("updateIsLogin", { isLogin: false });
       // 拿imgCode & token
       initToken();
@@ -245,18 +245,14 @@ export default defineComponent({
             store.commit("updateIsLogin", { isLogin: true });
             console.log("updateIsLogin", store);
             console.log(menus, "路由");
-            console.log(
-              "menus[0].subMenu[0].subMenu",
-              menus[0].subMenu[0].subMenu
-            );
             // console.log("menus[0].subMenu[0].subMenu[0].path",menus[0].subMenu[0].subMenu[0].path)
             console.log("subMenu[0].path", menus[0].subMenu[0].path);
-            // router.push(
-            //   menus[0].subMenu[0].subMenu
-            //     ? menus[0].subMenu[0].subMenu[0].path
-            //     : menus[0].subMenu[0].path
-            // );
-            router.push("/h");
+            router.push(
+              menus[0].subMenu[0].subMenu
+                ? menus[0].subMenu[0].subMenu[0].path
+                : menus[0].subMenu[0].path
+            );
+            // router.push("/h");
           }
         },
       });

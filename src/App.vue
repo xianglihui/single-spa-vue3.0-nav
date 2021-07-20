@@ -25,7 +25,7 @@ import NavHeader from "@/components/NavHeader.vue";
 import NavAside from "@/components/NavAside.vue";
 import MainApp from "@/components/Main.vue";
 import { useStore } from "vuex";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute, useRouter, onBeforeRouteUpdate } from "vue-router";
 import { GetMenuItems } from "@/utils/authorization";
 // definComponent主要是用来帮助Vue在TS下正确推断出setup()组件的参数类型;引入 defineComponent() 以正确推断 setup() 组件的参数类型；defineComponent 可以正确适配无 props、数组 props 等形式；
 export default defineComponent({
@@ -44,18 +44,14 @@ export default defineComponent({
     const store = useStore();
     const route = useRoute();
     const router = useRouter();
-    const useWatch = () => {
-      watch(route, async (newval, oldval) => {
-        console.log("watch监听route.meta", route);
-        if (Object.prototype.hasOwnProperty.call(route.meta, "isLogin")) {
-          console.log("监听router的跳转");
-          state.isHideMenu = true;
-        } else {
-          state.isHideMenu = false;
-        }
-      });
-    };
-    useWatch();
+    watch(route, () => {
+      if (Object.prototype.hasOwnProperty.call(route.meta, "isLogin")) {
+        console.log("监听router的跳转");
+        state.isHideMenu = true;
+      } else {
+        state.isHideMenu = false;
+      }
+    });
     // isLogin(){
     //     return this.store.getters.isLogin
     // }
@@ -65,7 +61,10 @@ export default defineComponent({
     //     console.log("watch监听store", store);
     //   }
     // );
-
+    onBeforeRouteUpdate((to) => {
+      console.log("=====", to);
+    });
+    console.log("router.options.routes", router.options.routes);
     onMounted(async () => {
       (window as any).route = (path: string, query: any = {}) => {
         // router.push({ path, query: query });

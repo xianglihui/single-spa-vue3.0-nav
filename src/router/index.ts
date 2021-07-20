@@ -1,10 +1,5 @@
-import {
-  createRouter,
-  createWebHistory,
-  RouteRecordRaw,
-  useRoute,
-} from "vue-router";
-import Login from "../views/Login.vue";
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import Login from "@/views/Login.vue";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/login",
