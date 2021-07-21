@@ -29,11 +29,12 @@ const router = createRouter({
 router.onError((e: any) => {
   console.log("error:", e);
 });
-router.beforeEach((to, from) => {
+router.beforeEach((to, from, next) => {
   console.log("to", to);
   if (to.matched.length == 0) {
     console.log("to.path", to.path);
   }
+  next()
   // console.log("from", from);
   // if (to.path === from.path) {
   //   return false;
