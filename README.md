@@ -1,6 +1,20 @@
 ### desc
 vue3.0+ts+single-spa搭建的子项目导航系统
 ### 目录结构
+
+Setup:
+
+```sh
+# Terminal 1
+npm install
+npm run serve:standalone
+
+# Terminal 2
+npm run json-server
+```
+
+See https://github.com/single-spa/create-single-spa/issues/311
+
 ```
 |-- README.md
 |-- __json_server_mock__
