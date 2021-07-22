@@ -1,0 +1,58 @@
+diff --git a/node_modules/vue-router/dist/vue-router.cjs.js b/node_modules/vue-router/dist/vue-router.cjs.js
+index a4b06dd..428fc54 100644
+--- a/node_modules/vue-router/dist/vue-router.cjs.js
++++ b/node_modules/vue-router/dist/vue-router.cjs.js
+@@ -5,6 +5,8 @@
+   */
+ 'use strict';
+ 
++console.log('hi')
++
+ Object.defineProperty(exports, '__esModule', { value: true });
+ 
+ var vue = require('vue');
+diff --git a/node_modules/vue-router/dist/vue-router.esm-browser.js b/node_modules/vue-router/dist/vue-router.esm-browser.js
+index 82673cf..ca0a6d0 100644
+--- a/node_modules/vue-router/dist/vue-router.esm-browser.js
++++ b/node_modules/vue-router/dist/vue-router.esm-browser.js
+@@ -6,6 +6,8 @@
+ import { getCurrentInstance, inject, onUnmounted, onDeactivated, onActivated, computed, unref, watchEffect, defineComponent, reactive, h, provide, ref, watch, shallowRef, nextTick } from 'vue';
+ import { setupDevtoolsPlugin } from '@vue/devtools-api';
+ 
++console.log('hi2')
++
+ const hasSymbol = typeof Symbol === 'function' && typeof Symbol.toStringTag === 'symbol';
+ const PolySymbol = (name) => 
+ // vr = vue router
+diff --git a/node_modules/vue-router/dist/vue-router.esm-bundler.js b/node_modules/vue-router/dist/vue-router.esm-bundler.js
+index 4bef566..51fdbb1 100644
+--- a/node_modules/vue-router/dist/vue-router.esm-bundler.js
++++ b/node_modules/vue-router/dist/vue-router.esm-bundler.js
+@@ -5,6 +5,8 @@
+   */
+ import { getCurrentInstance, inject, onUnmounted, onDeactivated, onActivated, computed, unref, watchEffect, defineComponent, reactive, h, provide, ref, watch, shallowRef, nextTick } from 'vue';
+ import { setupDevtoolsPlugin } from '@vue/devtools-api';
++import { isEqual } from 'lodash-es'
++
+ 
+ const hasSymbol = typeof Symbol === 'function' && typeof Symbol.toStringTag === 'symbol';
+ const PolySymbol = (name) => 
+@@ -2904,7 +2906,7 @@ function createRouter(options) {
+             : assign({}, to);
+     }
+     function checkCanceledNavigation(to, from) {
+-        if (pendingLocation !== to) {
++        if (!isEqual(pendingLocation, to)) {
+             return createRouterError(8 /* NAVIGATION_CANCELLED */, {
+                 from,
+                 to,
+@@ -3103,7 +3105,8 @@ function createRouter(options) {
+             // catch any navigation canceled
+             .catch(err => isNavigationFailure(err, 8 /* NAVIGATION_CANCELLED */)
+             ? err
+-            : Promise.reject(err)));
++            : Promise.reject(err))).finally(() => {
++            });
+     }
+     function triggerAfterEach(to, from, failure) {
+         // navigation is confirmed, call afterGuards
