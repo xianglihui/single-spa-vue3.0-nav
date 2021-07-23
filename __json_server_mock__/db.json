@@ -19,16 +19,12 @@
     "name": "测试用户"
   },
   "getMenuTreesByUser": {
-    "error": null,
-    "success": true,
-    "targetUrl": null,
-    "unAuthorizedRequest": false,
     "result": [
       {
-        "id": "1",
-        "name": "A",
-        "code": "A",
-        "url": "http://localhost:8081/",
+        "id": "18272",
+        "name": "SCM",
+        "code": "SCM",
+        "url": "https://scm-dev.lonsid.co/",
         "featureType": 1,
         "orderIndex": 8,
         "icon": "",
@@ -38,51 +34,123 @@
         "parentCode": "",
         "children": [
           {
-            "id": "11",
-            "name": "首页",
-            "code": "A.index",
-            "url": "/home",
+            "id": "18273",
+            "name": "供应商订单平台",
+            "code": "SCM.order",
+            "url": "/business",
             "featureType": 3,
             "orderIndex": 1,
             "icon": "",
             "namePinyin": "",
             "isCollapse": false,
             "isShowYS": null,
-            "parentCode": "A",
+            "parentCode": "SCM",
             "children": [
               {
-                "id": "111",
-                "name": "首页编辑",
-                "code": "A.index.edit",
-                "url": "/home",
+                "id": "18274",
+                "name": "订单管理",
+                "code": "SCM.business.orderManage",
+                "url": "/business/orderManage",
                 "featureType": 3,
                 "orderIndex": 1,
                 "icon": "",
                 "namePinyin": "",
                 "isCollapse": false,
                 "isShowYS": null,
-                "parentCode": "A.index",
+                "parentCode": "SCM.order",
                 "children": []
               },
               {
-                "id": "112",
-                "name": "首页展示",
-                "code": "A.index.show",
-                "url": "/home",
+                "id": "18282",
+                "name": "售后管理",
+                "code": "SCM.order.afterManage",
+                "url": "/business/afterSaleManage",
                 "featureType": 3,
                 "orderIndex": 2,
                 "icon": "",
                 "namePinyin": "",
                 "isCollapse": false,
                 "isShowYS": null,
-                "parentCode": "A.index",
+                "parentCode": "SCM.order",
                 "children": []
               }
             ]
           }
         ]
       }
-    ]
+    ],
+    "targetUrl": null,
+    "success": true,
+    "error": null,
+    "unAuthorizedRequest": false,
+    "__abp": true
+  },
+  "getEeatureTree": {
+    "result": [
+      {
+        "id": "18272",
+        "name": "SCM",
+        "code": "SCM",
+        "url": "https://xxx-dev.xxx.co/",
+        "featureType": 1,
+        "orderIndex": 8,
+        "icon": "",
+        "namePinyin": "",
+        "isCollapse": false,
+        "isShowYS": null,
+        "parentCode": "",
+        "children": [
+          {
+            "id": "18273",
+            "name": "供应商订单平台",
+            "code": "SCM.order",
+            "url": "/business",
+            "featureType": 3,
+            "orderIndex": 1,
+            "icon": "",
+            "namePinyin": "",
+            "isCollapse": false,
+            "isShowYS": null,
+            "parentCode": "SCM",
+            "children": [
+              {
+                "id": "18274",
+                "name": "订单管理",
+                "code": "SCM.business.orderManage",
+                "url": "/business/orderManage",
+                "featureType": 3,
+                "orderIndex": 1,
+                "icon": "",
+                "namePinyin": "",
+                "isCollapse": false,
+                "isShowYS": null,
+                "parentCode": "SCM.order",
+                "children": []
+              },
+              {
+                "id": "18282",
+                "name": "售后管理",
+                "code": "SCM.order.afterManage",
+                "url": "/business/afterSaleManage",
+                "featureType": 3,
+                "orderIndex": 2,
+                "icon": "",
+                "namePinyin": "",
+                "isCollapse": false,
+                "isShowYS": null,
+                "parentCode": "SCM.order",
+                "children": []
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "targetUrl": null,
+    "success": true,
+    "error": null,
+    "unAuthorizedRequest": false,
+    "__abp": true
   },
   "authorization": {
     "access_token": "authorizationToken",

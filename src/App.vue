@@ -44,14 +44,38 @@ export default defineComponent({
     const store = useStore();
     const route = useRoute();
     const router = useRouter();
-    watch(route, () => {
-      if (Object.prototype.hasOwnProperty.call(route.meta, "isLogin")) {
+    console.log("APP.vue执行");
+    // if (window.history) {
+    //   console.log("--------");
+    //   history.pushState(null, "", document.URL);
+    //   window.addEventListener(
+    //     "popstate",
+    //     () => {
+    //       // if (!localGet("token")) {
+    //       //   state.showMenu = false;
+    //       // }
+    //       console.log("===========");
+    //       state.isHideMenu = true;
+    //     },
+    //     false
+    //   );
+    // }
+    // router.beforeEach((to, from) => {
+    //   console.log("to", to);
+    //   console.log("from", from);
+    // });
+    watch(
+      route,
+      () => {
         console.log("监听router的跳转");
-        state.isHideMenu = true;
-      } else {
-        state.isHideMenu = false;
-      }
-    });
+        if (Object.prototype.hasOwnProperty.call(route.meta, "isLogin")) {
+          state.isHideMenu = true;
+        } else {
+          state.isHideMenu = false;
+        }
+      },
+      { deep: true }
+    );
     // isLogin(){
     //     return this.store.getters.isLogin
     // }

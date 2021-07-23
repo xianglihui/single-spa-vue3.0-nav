@@ -4,7 +4,7 @@
     <div>
       <el-menu
         class="el-menu-vertical"
-        :default-active="defaultActive"
+        :default-active="0"
         :unique-opened="true"
         :collapse="isNavCollapse"
         @select="handleSelect"
@@ -141,8 +141,8 @@ export default defineComponent({
     };
     // vuex中拿菜单
     const getCurMenuData = () => {
-      // getDefaultActive(); //获取当前选中index
-      //   console.log("激活getCurMenuData");
+      getDefaultActive(); //获取当前选中index
+      console.log("激活getCurMenuData", state.Menus);
       if (state.Menus.length == 0) {
         return [];
       } else {
