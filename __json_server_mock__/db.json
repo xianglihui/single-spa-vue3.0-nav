@@ -85,7 +85,7 @@
     "unAuthorizedRequest": false,
     "__abp": true
   },
-  "getEeatureTree": {
+  "getFeatureTree": {
     "result": [
       {
         "id": "18272",
@@ -174,5 +174,43 @@
         "url": "http://localhost:8081"
       }
     ]
-  }
+  },
+  "test": [
+    {
+      "name": "张三",
+      "age": "18",
+      "id": 1
+    },
+    {
+      "name": "李四",
+      "age": "19",
+      "id": 2
+    }
+  ],
+  "GetAuthRoles": [
+    {
+      "creationTime": "2021-7-29 16:17",
+      "description": "超级管理员",
+      "id": 1,
+      "name": "admin"
+    },
+    {
+      "creationTime": "2021-7-29 16:18",
+      "description": "技术工程师",
+      "id": 2,
+      "name": "技术工程师"
+    },
+    {
+      "creationTime": "2021-7-29 16:19",
+      "description": "售后服务",
+      "id": 3,
+      "name": "售后服务"
+    },
+    {
+      "creationTime": "2021-7-29 16:20",
+      "description": "财务",
+      "id": 4,
+      "name": "财务"
+    }
+  ]
 }
