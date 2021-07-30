@@ -179,7 +179,8 @@
     {
       "name": "张三",
       "age": "18",
-      "id": 1
+      "id": 1,
+      "info": [{ "sex": "女" }]
     },
     {
       "name": "李四",
@@ -211,6 +212,252 @@
       "description": "财务",
       "id": 4,
       "name": "财务"
+    }
+  ],
+  "GetRolePermissionTree": [
+    {
+      "id": 1,
+      "features": [
+        {
+          "id": "18272",
+          "name": "SCM",
+          "code": "SCM",
+          "url": "https://xxx-dev.xxx.co/",
+          "featureType": 1,
+          "orderIndex": 8,
+          "icon": "",
+          "namePinyin": "",
+          "isCollapse": false,
+          "isShowYS": null,
+          "parentCode": "",
+          "children": [
+            {
+              "id": "18273",
+              "name": "供应商订单平台",
+              "code": "SCM.order",
+              "url": "/business",
+              "featureType": 3,
+              "orderIndex": 1,
+              "icon": "",
+              "namePinyin": "",
+              "isCollapse": false,
+              "isShowYS": null,
+              "parentCode": "SCM",
+              "children": [
+                {
+                  "id": "18274",
+                  "name": "订单管理",
+                  "code": "SCM.business.orderManage",
+                  "url": "/business/orderManage",
+                  "featureType": 3,
+                  "orderIndex": 1,
+                  "icon": "",
+                  "namePinyin": "",
+                  "isCollapse": false,
+                  "isShowYS": null,
+                  "parentCode": "SCM.order",
+                  "children": []
+                },
+                {
+                  "id": "18282",
+                  "name": "售后管理",
+                  "code": "SCM.order.afterManage",
+                  "url": "/business/afterSaleManage",
+                  "featureType": 3,
+                  "orderIndex": 2,
+                  "icon": "",
+                  "namePinyin": "",
+                  "isCollapse": false,
+                  "isShowYS": null,
+                  "parentCode": "SCM.order",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "grantedPermissionChildren": [
+        {
+          "id": 37483,
+          "name": "SCM",
+          "description": null
+        },
+        {
+          "id": 37484,
+          "name": "SCM.order",
+          "description": null
+        },
+        {
+          "id": 37485,
+          "name": "SCM.business.orderManage",
+          "description": null
+        },
+        {
+          "id": 37486,
+          "name": "SCM.order.afterManage",
+          "description": null
+        },
+        {
+          "id": 37487,
+          "name": "SCM.business.orderManage",
+          "description": null
+        },
+        {
+          "id": 37488,
+          "name": "SCM.order",
+          "description": null
+        },
+        {
+          "id": 37489,
+          "name": "SCM.order.afterManage",
+          "description": null
+        },
+        {
+          "id": 37490,
+          "name": "SCM",
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "grantedPermissions": [
+        {
+          "id": 18274,
+          "name": "SCM.business.orderManage",
+          "description": "订单管理"
+        },
+        {
+          "id": 18282,
+          "name": "SCM.order.afterManage",
+          "description": "售后管理"
+        }
+      ]
+    }
+  ],
+  "GetRolePermissionTreeById": [
+    {
+      "id": 1,
+      "result": {
+        "features": [
+          {
+            "id": "18272",
+            "name": "SCM",
+            "code": "SCM",
+            "url": "https://xxx-dev.xxx.co/",
+            "featureType": 1,
+            "orderIndex": 8,
+            "icon": "",
+            "namePinyin": "",
+            "isCollapse": false,
+            "isShowYS": null,
+            "parentCode": "",
+            "children": [
+              {
+                "id": "18273",
+                "name": "供应商订单平台",
+                "code": "SCM.order",
+                "url": "/business",
+                "featureType": 3,
+                "orderIndex": 1,
+                "icon": "",
+                "namePinyin": "",
+                "isCollapse": false,
+                "isShowYS": null,
+                "parentCode": "SCM",
+                "children": [
+                  {
+                    "id": "18274",
+                    "name": "订单管理",
+                    "code": "SCM.business.orderManage",
+                    "url": "/business/orderManage",
+                    "featureType": 3,
+                    "orderIndex": 1,
+                    "icon": "",
+                    "namePinyin": "",
+                    "isCollapse": false,
+                    "isShowYS": null,
+                    "parentCode": "SCM.order",
+                    "children": []
+                  },
+                  {
+                    "id": "18282",
+                    "name": "售后管理",
+                    "code": "SCM.order.afterManage",
+                    "url": "/business/afterSaleManage",
+                    "featureType": 3,
+                    "orderIndex": 2,
+                    "icon": "",
+                    "namePinyin": "",
+                    "isCollapse": false,
+                    "isShowYS": null,
+                    "parentCode": "SCM.order",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "grantedPermissionChildren": [
+          {
+            "id": 37483,
+            "name": "SCM",
+            "description": null
+          },
+          {
+            "id": 37484,
+            "name": "SCM.order",
+            "description": null
+          },
+          {
+            "id": 37485,
+            "name": "SCM.business.orderManage",
+            "description": null
+          },
+          {
+            "id": 37486,
+            "name": "SCM.order.afterManage",
+            "description": null
+          },
+          {
+            "id": 37487,
+            "name": "SCM.business.orderManage",
+            "description": null
+          },
+          {
+            "id": 37488,
+            "name": "SCM.order",
+            "description": null
+          },
+          {
+            "id": 37489,
+            "name": "SCM.order.afterManage",
+            "description": null
+          },
+          {
+            "id": 37490,
+            "name": "SCM",
+            "description": null
+          }
+        ],
+        "grantedPermissions": [
+          {
+            "id": 18274,
+            "name": "SCM.business.orderManage",
+            "description": "订单管理"
+          },
+          {
+            "id": 18282,
+            "name": "SCM.order.afterManage",
+            "description": "售后管理"
+          }
+        ]
+      }
     }
   ]
 }
