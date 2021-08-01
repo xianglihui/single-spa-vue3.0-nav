@@ -180,7 +180,11 @@
       "name": "张三",
       "age": "18",
       "id": 1,
-      "info": [{ "sex": "女" }]
+      "info": [
+        {
+          "sex": "女"
+        }
+      ]
     },
     {
       "name": "李四",
@@ -212,6 +216,21 @@
       "description": "财务",
       "id": 4,
       "name": "财务"
+    },
+    {
+      "name": "测试工程师",
+      "description": "测试",
+      "id": 5
+    },
+    {
+      "name": "UI",
+      "description": "UI",
+      "id": 6
+    },
+    {
+      "name": "前端",
+      "description": "前端",
+      "id": 7
     }
   ],
   "GetRolePermissionTree": [
@@ -342,62 +361,28 @@
   "GetRolePermissionTreeById": [
     {
       "id": 1,
-      "result": {
-        "grantedPermissionChildren": [
-          {
-            "id": 37483,
-            "name": "SCM",
-            "description": null
-          },
-          {
-            "id": 37484,
-            "name": "SCM.order",
-            "description": null
-          },
-          {
-            "id": 37485,
-            "name": "SCM.business.orderManage",
-            "description": null
-          },
-          {
-            "id": 37486,
-            "name": "SCM.order.afterManage",
-            "description": null
-          },
-          {
-            "id": 37487,
-            "name": "SCM.business.orderManage",
-            "description": null
-          },
-          {
-            "id": 37488,
-            "name": "SCM.order",
-            "description": null
-          },
-          {
-            "id": 37489,
-            "name": "SCM.order.afterManage",
-            "description": null
-          },
-          {
-            "id": 37490,
-            "name": "SCM",
-            "description": null
-          }
-        ],
-        "grantedPermissions": [
-          {
-            "id": 18274,
-            "name": "SCM.business.orderManage",
-            "description": "订单管理"
-          },
-          {
-            "id": 18282,
-            "name": "SCM.order.afterManage",
-            "description": "售后管理"
-          }
-        ]
-      }
+      "grantedPermissions": [
+        {
+          "id": 37483,
+          "name": "SCM",
+          "description": null
+        },
+        {
+          "id": 37484,
+          "name": "SCM.order",
+          "description": null
+        },
+        {
+          "id": 37485,
+          "name": "SCM.business.orderManage",
+          "description": null
+        },
+        {
+          "id": 37486,
+          "name": "SCM.order.afterManage",
+          "description": null
+        }
+      ]
     }
   ],
   "features": [
@@ -456,6 +441,44 @@
               "children": []
             }
           ]
+        }
+      ]
+    }
+  ],
+  "grantedPermissionChildren": [
+    {
+      "id": 1,
+      "result": [
+        {
+          "id": 18274,
+          "name": "SCM.business.orderManage",
+          "description": "订单管理"
+        },
+        {
+          "id": 18282,
+          "name": "SCM.order.afterManage",
+          "description": "售后管理"
+        }
+      ]
+    }
+  ],
+  "getUserRoles": [
+    {
+      "id": 1,
+      "result": [
+        {
+          "userType": 1,
+          "nickName": null,
+          "unionId": null,
+          "name": "张三",
+          "userName": "zhangsan"
+        },
+        {
+          "userType": 1,
+          "nickName": null,
+          "unionId": null,
+          "name": "李四",
+          "userName": "lisi"
         }
       ]
     }
