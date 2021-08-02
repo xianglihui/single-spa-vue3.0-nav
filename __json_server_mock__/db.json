@@ -194,25 +194,21 @@
   ],
   "GetAuthRoles": [
     {
-      "creationTime": "2021-7-29 16:17",
       "description": "超级管理员",
       "id": 1,
       "name": "admin"
     },
     {
-      "creationTime": "2021-7-29 16:18",
       "description": "技术工程师",
       "id": 2,
       "name": "技术工程师"
     },
     {
-      "creationTime": "2021-7-29 16:19",
       "description": "售后服务",
       "id": 3,
       "name": "售后服务"
     },
     {
-      "creationTime": "2021-7-29 16:20",
       "description": "财务",
       "id": 4,
       "name": "财务"
@@ -481,6 +477,47 @@
           "userName": "lisi"
         }
       ]
+    }
+  ],
+  "getusers": [
+    {
+      "id": 1,
+      "isActive": false,
+      "userName": "localA",
+      "name": "张三",
+      "roleName": "财务",
+      "phoneNumber": "15088907309"
+    },
+    {
+      "id": 2,
+      "isActive": true,
+      "userName": "localB",
+      "name": "李四",
+      "roleName": "总监",
+      "phoneNumber": "15088907309"
+    }
+  ],
+  "GetUserRolesByTest": [
+    {
+      "id": 1,
+      "roleName": "超级管理员"
+    },
+    {
+      "id": 2,
+      "roleName": "技术工程师"
+    }
+  ],
+  "GetUserRolesById": [
+    {
+      "id": 1,
+      "roleNames": [
+        {"roleName": "超级管理员"},
+        {"roleName": "test"}
+      ]
+    },
+    {
+      "id": 2,
+      "roleName": "技术工程师"
     }
   ]
 }
