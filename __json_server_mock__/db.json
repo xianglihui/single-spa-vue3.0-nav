@@ -381,6 +381,91 @@
       ]
     }
   ],
+  "featuresTest": [
+    {
+      "id": 1,
+      "name": "CentralSystem",
+      "url": "http://localhost:8081/",
+      "featureType": 1,
+      "icon": "",
+      "code": "System",
+      "parentCode": "",
+      "children": [
+        {
+          "id": 1,
+          "parentCode": "System",
+          "code": "System.Auth",
+          "url": "/authority",
+          "icon": "",
+          "name": "权限管理系统",
+          "featureType": 3,
+          "children": [
+            {
+              "id": 1,
+              "name": "权限树",
+              "code": "System.Auth.PermissionTree",
+              "featureType": 3,
+              "icon": "",
+              "parentCode": "System.Auth",
+              "url": "/authority/permission",
+              "children": [
+                {
+                  "id": 1,
+                  "name": "授权给角色",
+                  "code": "System.Auth.permissionTree.SetPremissionTree",
+                  "icon": "",
+                  "featureType": 0,
+                  "children": []
+                },
+                {
+                  "id": 1,
+                  "name": "新增权限",
+                  "code": "System.Auth.permissionTree.AddPremission",
+                  "icon": "",
+                  "featureType": 0,
+                  "children": []
+                },
+                {
+                  "id": 1,
+                  "name": "删除权限",
+                  "code": "System.Auth.permissionTree.DelPremission",
+                  "icon": "",
+                  "featureType": 0,
+                  "children": []
+                },
+                {
+                  "id": 1,
+                  "name": "编辑权限",
+                  "code": "System.Auth.permissionTree.UpdatePremission",
+                  "icon": "",
+                  "featureType": 0,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "name": "角色管理",
+              "code": "System.Auth.RolesManage",
+              "featureType": 3,
+              "icon": "",
+              "parentCode": "System.Auth",
+              "url": "/authority/role"
+            },
+            {
+              "id": 3,
+              "name": "用户管理",
+              "code": "System.Auth.UsersManage",
+              "featureType": 3,
+              "icon": "",
+              "parentCode": "System.Auth",
+              "url": "/authority/user"
+            }
+          ]
+        }
+      ]
+    }
+  ],
   "features": [
     {
       "id": "18272",
@@ -483,7 +568,8 @@
     {
       "id": 1,
       "isActive": false,
-      "userName": "localA",
+      "userName": "localC",
+      "password": "123456",
       "name": "张三",
       "roleName": "财务",
       "phoneNumber": "15088907309"
@@ -492,9 +578,15 @@
       "id": 2,
       "isActive": true,
       "userName": "localB",
+      "password": "123456",
       "name": "李四",
       "roleName": "总监",
       "phoneNumber": "15088907309"
+    },
+    {
+      "userName": "王五",
+      "phoneNumber": "10211111",
+      "id": 3
     }
   ],
   "GetUserRolesByTest": [
@@ -511,8 +603,12 @@
     {
       "id": 1,
       "roleNames": [
-        {"roleName": "超级管理员"},
-        {"roleName": "test"}
+        {
+          "roleName": "超级管理员"
+        },
+        {
+          "roleName": "test"
+        }
       ]
     },
     {
