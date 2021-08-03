@@ -21,58 +21,85 @@
   "getMenuTreesByUser": {
     "result": [
       {
-        "id": "18272",
-        "name": "SCM",
-        "code": "SCM",
-        "url": "https://scm-dev.lonsid.co/",
+        "id": 1,
+        "name": "CentralSystem",
+        "url": "http://localhost:8081/",
         "featureType": 1,
-        "orderIndex": 8,
         "icon": "",
-        "namePinyin": "",
-        "isCollapse": false,
-        "isShowYS": null,
+        "code": "System",
         "parentCode": "",
         "children": [
           {
-            "id": "18273",
-            "name": "供应商订单平台",
-            "code": "SCM.order",
-            "url": "/business",
-            "featureType": 3,
-            "orderIndex": 1,
+            "id": 1,
+            "parentCode": "System",
+            "code": "System.Auth",
+            "url": "/authority",
             "icon": "",
-            "namePinyin": "",
-            "isCollapse": false,
-            "isShowYS": null,
-            "parentCode": "SCM",
+            "name": "权限管理系统",
+            "featureType": 3,
             "children": [
               {
-                "id": "18274",
-                "name": "订单管理",
-                "code": "SCM.business.orderManage",
-                "url": "/business/orderManage",
+                "id": 1,
+                "name": "权限树",
+                "code": "System.Auth.PermissionTree",
                 "featureType": 3,
-                "orderIndex": 1,
                 "icon": "",
-                "namePinyin": "",
-                "isCollapse": false,
-                "isShowYS": null,
-                "parentCode": "SCM.order",
-                "children": []
+                "parentCode": "System.Auth",
+                "url": "/authority/permission",
+                "children": [
+                  {
+                    "id": 1,
+                    "name": "授权给角色",
+                    "code": "System.Auth.permissionTree.SetPremissionTree",
+                    "icon": "",
+                    "featureType": 0,
+                    "children": []
+                  },
+                  {
+                    "id": 1,
+                    "name": "新增权限",
+                    "code": "System.Auth.permissionTree.AddPremission",
+                    "icon": "",
+                    "featureType": 0,
+                    "children": []
+                  },
+                  {
+                    "id": 1,
+                    "name": "删除权限",
+                    "code": "System.Auth.permissionTree.DelPremission",
+                    "icon": "",
+                    "featureType": 0,
+                    "children": []
+                  },
+                  {
+                    "id": 1,
+                    "name": "编辑权限",
+                    "code": "System.Auth.permissionTree.UpdatePremission",
+                    "icon": "",
+                    "featureType": 0,
+                    "children": []
+                  }
+                ]
               },
               {
-                "id": "18282",
-                "name": "售后管理",
-                "code": "SCM.order.afterManage",
-                "url": "/business/afterSaleManage",
+                "id": 2,
+                "name": "角色管理",
+                "code": "System.Auth.RolesManage",
                 "featureType": 3,
-                "orderIndex": 2,
                 "icon": "",
-                "namePinyin": "",
-                "isCollapse": false,
-                "isShowYS": null,
-                "parentCode": "SCM.order",
-                "children": []
+                "parentCode": "System.Auth",
+                "url": "/authority/role",
+                "children":[]
+              },
+              {
+                "id": 3,
+                "name": "用户管理",
+                "code": "System.Auth.UsersManage",
+                "featureType": 3,
+                "icon": "",
+                "parentCode": "System.Auth",
+                "url": "/authority/user",
+                "children":[]
               }
             ]
           }

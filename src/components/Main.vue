@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div id="root_app1"></div>
+    <div id="app1"></div>
+    
   </div>
 </template>
 <script lang="ts">

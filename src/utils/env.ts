@@ -29,9 +29,9 @@ const AppOps: any = {
     ], // account：账号登录   domain： 域账号登录
   },
   localhost: {
-    name: "localhost",
-    title: "LocalHost",
-    app: "A",
+    name: "CentralSystem",
+    title: "CentralSystem",
+    app: "center",
     isAutoLogin: false,
     isOpenNews: false,
     login: [

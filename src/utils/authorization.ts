@@ -75,7 +75,6 @@ type Menu = {
 let configMenus: Menu[] = [];
 // 获取菜单
 export async function GetMenuItems() {
-  console.log("run");
   let res: any = false; // localStorage.getItem('lsd-menus')
   if (res) {
     return JSON.parse(res);
@@ -88,13 +87,13 @@ export async function GetMenuItems() {
     console.log("run2", serve);
     res = await serve.request();
     console.log("获取菜单", res);
+    // 菜单中的设置模块
     configMenus = [];
     if (res.length == 0) {
-      console.log("==========");
       return [];
     } else {
-      console.log("-----------");
-      const data = getNavMapMenu(res[0]["children"]); //菜单list
+      // 拿当前系统的菜单
+      const data = getNavMapMenu(res[0]["children"]);
       sessionStorage.setItem("lsd-menus", JSON.stringify(data));
       sessionStorage.setItem("lsd-config-menus", JSON.stringify(configMenus));
       return data;
@@ -106,6 +105,7 @@ function getNavMapMenu(res: any) {
   let isSubmenu = false;
   return res
     .filter((v: any) => {
+      // 如果该模块属于'设置'，将设置模块独立
       if (v.featureType == 4) {
         configMenus.push({
           active: false,
@@ -119,6 +119,7 @@ function getNavMapMenu(res: any) {
           isCollapse: v.isCollapse || false,
         });
       }
+      // 返回属于'菜单'的模块
       return v.featureType == 3;
     })
     .map((v: any) => {
@@ -133,7 +134,6 @@ function getNavMapMenu(res: any) {
         id: v.id,
         isCollapse: v.isCollapse || false,
       };
-
       v.children.map((val: any) => {
         if (val.featureType == 3) {
           isSubmenu = true;

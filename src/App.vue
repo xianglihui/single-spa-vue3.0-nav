@@ -12,7 +12,16 @@
     >
       <router-view />
     </div>
-    <div class="moduleContent navCollapse" v-show="!isHideMenu">
+    <!--navWidth，navHeight配置是为了适配 single-spa环境的nav和header -->
+    <div
+      class="moduleContent navCollapse"
+      :style="{
+        width: `calc( 100% - ${navWidth}px)`,
+        height: `calc(100% - ${navHeight}px)`,
+        overflow: 'auto',
+      }"
+      v-show="!isHideMenu"
+    >
       <main-app />
     </div>
   </div>
@@ -37,7 +46,8 @@ export default defineComponent({
   setup() {
     const state = reactive({
       isHideMenu: true,
-      navWidth: 100,
+      navWidth: 240,
+      navHeight: 46,
       isLogin: true,
       erd: "",
     });
@@ -146,7 +156,7 @@ export default defineComponent({
   }
 }
 .moduleContent {
-  width: calc(100% - 65px);
+  width: calc(100% - 240px);
   position: fixed;
   right: 0;
   bottom: 0;
