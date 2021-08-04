@@ -1,8 +1,8 @@
 <template>
   <div class="navHeader">
-    <!-- <outside-menu></outside-menu> -->
     <!-- <nav-header></nav-header> -->
     <div class="leftMenu">
+      <outsideMenu />
       <div class="nav_logo">{{ title }}</div>
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item v-for="(item, i) in crumbs" :key="i">
@@ -24,10 +24,13 @@
 </template>
 
 <script lang="ts">
-// import OutsideMenu from "@/components/OutSideMenu.vue";
+import outsideMenu from "@/components/OutSideMenu.vue";
 import { reactive, toRefs, ref, onMounted, defineComponent } from "vue";
 import { useStore } from "vuex";
 export default defineComponent({
+  components: {
+    outsideMenu,
+  },
   setup() {
     const store = useStore();
     const userToken = ref(sessionStorage.getItem("token"));

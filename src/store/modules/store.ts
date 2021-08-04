@@ -113,20 +113,14 @@ const mutations: any = {
   updateNavIndex(state: Record<string, unknown>, info: string | number) {
     state["navIndex"] = info;
   },
-  updateShowCfg(state: Record<string, unknown>, info: Record<string, unknown>) {
-    state["isShowCfg"] = info["isShowCfg"];
+  updateShowCfg(state: Record<string, unknown>, info: boolean) {
+    state["isShowCfg"] = info;
   },
-  updateTopCollapse(
-    state: Record<string, unknown>,
-    info: Record<string, unknown>
-  ) {
-    state["isTopCollapse"] = info["isTopCollapse"];
+  updateTopCollapse(state: Record<string, unknown>, info: boolean) {
+    state["isTopCollapse"] = info;
   },
-  updateNavCollapse(
-    state: Record<string, unknown>,
-    info: Record<string, unknown>
-  ) {
-    state["isNavCollapse"] = info["isNavCollapse"];
+  updateNavCollapse(state: Record<string, unknown>, info: boolean) {
+    state["isNavCollapse"] = info;
   },
   updateCrumbs(state: Record<string, unknown>, info: Record<string, unknown>) {
     state["crumbs"] = info["crumbs"];

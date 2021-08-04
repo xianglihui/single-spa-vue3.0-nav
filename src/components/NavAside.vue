@@ -188,12 +188,13 @@ export default defineComponent({
 
         sessionStorage.setItem("NavIndex", navIndex.value);
         localStorage.setItem("NavIndex", navIndex.value);
-
+        // 关闭菜单
         store.commit("updateTopCollapse", { isTopCollapse: false });
         router.push(item.path);
       }
     };
     onMounted(async () => {
+      console.log("vuex", store.state);
       console.log("onMounted is start");
     });
     return {

@@ -1,44 +1,107 @@
 <template>
   <div id="outsideMenu">
-    <!-- <div
+    <div
       class="topMenu el-icon-menu"
       :title="titleTip"
       @click="collapseNavMenu"
-    ></div> -->
+    ></div>
     <!--  -->
-    <!-- <extend-nav @collapseNavMenu="collapseNavMenu" :popoverData="popoverData" :popoverOutsideData="popoverOutsideData"></extend-nav> -->
+    <extendNav
+      @collapseNavMenu="collapseNavMenu"
+      :popoverData="popoverData"
+      :popoverOutsideData="popoverOutsideData"
+    ></extendNav>
   </div>
 </template>
 
 <script lang="ts">
-// import { Component, Vue, Watch } from "vue-property-decorator"
-// import { menuConfig, formatMenu } from "@/lib/menu"
-
-// interface MenuData {
-//     name: string
-//     icon?: string
-//     path?: string
-//     active?: boolean
-//     subMenu?: MenuData[]
-//     prem?: string
-//     [propertyName: string]: any
-// }
-// import MenuData from "@/lib/menu/models"
-
-// import ExtendNav from "./ExtendNav.vue"
-
-// import { GetAllModules } from "@/util/authorization"
-
-interface Dict {
-  key: string;
-  list: string[];
-}
-// @Component({
-//     components: {
-//         'extend-nav': ExtendNav
-//     },
-// })
-export default {};
+import {
+  reactive,
+  toRefs,
+  onMounted,
+  defineComponent,
+  computed,
+  watch,
+} from "vue";
+import { useRoute } from "vue-router";
+import { useStore } from "vuex";
+import extendNav from "./ExtendNav.vue";
+export default defineComponent({
+  components: {
+    extendNav,
+  },
+  setup() {
+    const state = reactive({
+      isUpateNavCollapse: false,
+      titleTip: "",
+    });
+    const store = useStore();
+    const route = useRoute();
+    // 总菜单 显示/隐藏
+    const visible = computed(() => {
+      return store.getters.getTopCollapse;
+    });
+    // 菜单
+    const popoverData = computed(() => {
+      return store.getters.Menus;
+    });
+    // 权限
+    const prem = computed(() => {
+      return store.getters.prem;
+    });
+    // 权限菜单
+    const premMenu = computed(() => {
+      return store.getters.premMenu;
+    });
+    // nav状态
+    const isNavCollapse = computed(() => {
+      return store.getters.getNavCollapse;
+    });
+    // watch 菜单
+    watch(
+      () => popoverData,
+      (newval, oldval) => {
+        console.log("newval", newval);
+        console.log("oldval", oldval);
+      }
+    );
+    watch(
+      () => prem,
+      (newval, oldval) => {
+        console.log("newval", newval);
+        console.log("oldval", oldval);
+      }
+    );
+    const collapseNavMenu = () => {
+      console.log("store", store.state);
+      store.commit("updateTopCollapse", !visible.value);
+      if (visible.value) {
+        // 关闭设置中心
+        store.commit("updateShowCfg", { isShowCfg: false });
+        if (isNavCollapse.value) {
+          state.isUpateNavCollapse = true;
+          store.commit("updateNavCollapse", { isNavCollapse: false });
+        }
+        state.titleTip = "显示导航窗口";
+      } else {
+        if (state.isUpateNavCollapse) {
+          state.isUpateNavCollapse = false;
+          store.commit("updateNavCollapse", { isNavCollapse: true });
+        }
+        state.titleTip = "隐藏导航窗口";
+      }
+    };
+    onMounted(async () => {
+      console.log("vuex outsideMenu", store.state);
+      console.log("visible", visible.value);
+      console.log("onMounted is start");
+    });
+    return {
+      ...toRefs(state),
+      collapseNavMenu,
+    };
+  },
+});
 </script>
 <style scoped>
 #outsideMenu {

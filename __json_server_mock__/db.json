@@ -89,7 +89,7 @@
                 "icon": "",
                 "parentCode": "System.Auth",
                 "url": "/authority/role",
-                "children":[]
+                "children": []
               },
               {
                 "id": 3,
@@ -99,7 +99,7 @@
                 "icon": "",
                 "parentCode": "System.Auth",
                 "url": "/authority/user",
-                "children":[]
+                "children": []
               }
             ]
           }
@@ -641,6 +641,24 @@
     {
       "id": 2,
       "roleName": "技术工程师"
+    }
+  ],
+  "getAllModules": [
+    {
+      "id": 1,
+      "children": [],
+      "featureType": 1,
+      "code": "System",
+      "name": "System",
+      "url": "localhost://localhost:8081/"
+    }
+  ],
+  "getUserFavoriteFeature": [
+    {
+      "id": 1,
+      "featureName": "权限树",
+      "icon": "",
+      "url": "/authority/permission"
     }
   ]
 }

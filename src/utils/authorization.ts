@@ -13,7 +13,7 @@ interface MenuData {
   [propertyName: string]: any;
 }
 
-// 自动登录
+// 自动登录(域账号)
 export async function AutoAuthorization() {
   const config = {
     withCredentials: true,
@@ -24,7 +24,7 @@ export async function AutoAuthorization() {
   const autoLoginURL = AUTO_AUTH_PATH + "/token";
   return await axios.post(autoLoginURL, null, config).then((res) => res.data);
 }
-
+// 登录
 export async function Authorization(options: Models.AuthReq) {
   let params = "";
   const property = "";
@@ -100,6 +100,7 @@ export async function GetMenuItems() {
     }
   }
 }
+// 侧边栏菜单
 function getNavMapMenu(res: any) {
   console.log("getNavMapMenu", res);
   let isSubmenu = false;
@@ -146,6 +147,30 @@ function getNavMapMenu(res: any) {
 
       return data;
     });
+}
+// 获取所有菜单
+export async function GetAllModules() {
+  const serve = new HttpResource<Array<MenuData>>(
+    HttpMethod.Get,
+    AUTH_PATH + "/getAllModules"
+  );
+  return await serve.request();
+}
+interface Collection {
+  featureId: number; // 菜单id
+  featureCode: string; // 菜单code
+  featureName: string;  // 菜单name
+  url: string; // 菜单路径
+  icon: string; // 菜单icon
+  id: string;
+}
+// 获取收藏列表
+export async function GetUserFavoriteFeature() {
+  const serve = new HttpResource<Collection>(
+    HttpMethod.Get,
+    AUTH_PATH + `/getUserFavoriteFeature?moduleName=${App_Name}`
+  );
+  return await serve.request();
 }
 // 用户信息
 export async function userInfo() {

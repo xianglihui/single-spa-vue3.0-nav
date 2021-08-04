@@ -18,7 +18,7 @@ import ElementPlus from "element-plus";
 const vueLifecycles = singleSpaVue({
   createApp,
   appOptions: {
-    el: "#root_nav", // 本地开发需要注释
+    // el: "#root_nav", // 本地开发需要注释
     render() {
       return h(App, {
         // single-spa props are available on the "this" object. Forward them to your component as needed.
