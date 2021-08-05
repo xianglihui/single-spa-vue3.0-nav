@@ -156,9 +156,9 @@ export default defineComponent({
       return store.getters.Menus;
     });
     /**
-     * 监听菜单
+     * 监听所有菜单
      * Menus immediate 配置非惰性，进入触发
-     *用户刷新浏览器菜单状态会发生改变，切换系统/label时不会触发
+     *用户刷新浏览器菜单状态会发生改变，由于是所有菜单，所以切换系统/label时不会触发
      */
     watch(
       state.Menus,

@@ -45,7 +45,7 @@ const state = {
   premMenu: [], // 权限菜单
   Menus: sessionStorage.getItem("lsd-menus")
     ? JSON.parse(sessionStorage.getItem("lsd-menus") || "[]")
-    : [], //菜单
+    : [], //当前系统所有菜单
   companyInfo: sessionStorage.getItem("companyinfo")
     ? JSON.parse(sessionStorage.getItem("companyinfo") || "{}")
     : "",

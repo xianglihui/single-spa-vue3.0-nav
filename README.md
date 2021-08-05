@@ -62,8 +62,14 @@ npm run serve:standalone
 `-- tsconfig.json
 ```
 ### 注意事项
-目前存在与vue-router兼容性问题。https://github.com/single-spa/create-single-spa/issues/311
+1. 目前存在与vue-router兼容性问题。https://github.com/single-spa/create-single-spa/issues/311
 
 ### 本地开发
 本地开发环境注意注释 el: "#root_nav"，这段代码是为了在single-spa环境下，能够作为路由容器提供挂载功能挂载
-
+### 暂未解决的业务问题
+1. 切换其他系统，侧边栏未发生变化
+2. 刷新页面，保持侧边栏状态
+3. 侧边栏收缩，控制类侧边栏
+### single-spa问题
+1. 看注意事项1
+2. 路由监听连续触发两次
