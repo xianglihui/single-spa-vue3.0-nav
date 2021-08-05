@@ -1,14 +1,18 @@
 <template>
   <div class="navHeader">
     <!-- <nav-header></nav-header> -->
-    <div class="leftMenu">
+    <div>
       <outsideMenu />
-      <div class="nav_logo">{{ title }}</div>
-      <el-breadcrumb separator-class="el-icon-arrow-right">
-        <el-breadcrumb-item v-for="(item, i) in crumbs" :key="i">
-          {{ item.name }}
-        </el-breadcrumb-item>
-      </el-breadcrumb>
+      <!-- 左侧菜单 -->
+      <div class="leftMenu">
+        <div class="nav_logo">{{ title }}</div>
+        <!-- 面包屑导航 -->
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item v-for="(item, i) in crumbs" :key="i">
+            {{ item.name }}
+          </el-breadcrumb-item>
+        </el-breadcrumb>
+      </div>
     </div>
     <div class="rightMenu" v-if="isLogin">
       <!-- <div class="lsd-tool" ref=""><slot name="tool"></slot></div> -->

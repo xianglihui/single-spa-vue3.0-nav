@@ -102,15 +102,87 @@
                 "children": []
               }
             ]
+          },
+          {
+            "id": 1,
+            "parentCode": "Test",
+            "code": "Test.Product",
+            "url": "/product",
+            "icon": "",
+            "name": "商品测试系统",
+            "featureType": 3,
+            "children": [
+              {
+                "id": 1,
+                "name": "商品管理",
+                "code": "Test.Product.Manage",
+                "featureType": 3,
+                "icon": "",
+                "parentCode": "Test.Product",
+                "url": "/product/productManage",
+                "children": [
+                  {
+                    "id": 1,
+                    "name": "授权给角色",
+                    "code": "System.Auth.permissionTree.SetPremissionTree",
+                    "icon": "",
+                    "featureType": 0,
+                    "children": []
+                  },
+                  {
+                    "id": 1,
+                    "name": "新增权限",
+                    "code": "System.Auth.permissionTree.AddPremission",
+                    "icon": "",
+                    "featureType": 0,
+                    "children": []
+                  },
+                  {
+                    "id": 1,
+                    "name": "删除权限",
+                    "code": "System.Auth.permissionTree.DelPremission",
+                    "icon": "",
+                    "featureType": 0,
+                    "children": []
+                  },
+                  {
+                    "id": 1,
+                    "name": "编辑权限",
+                    "code": "System.Auth.permissionTree.UpdatePremission",
+                    "icon": "",
+                    "featureType": 0,
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "name": "商品分类",
+                "code": "Test.Product.Classify",
+                "featureType": 3,
+                "icon": "",
+                "parentCode": "Test.Product",
+                "url": "/product/classify",
+                "children": []
+              },
+              {
+                "id": 3,
+                "name": "SPU管理",
+                "code": "Test.Product.UsersManage",
+                "featureType": 3,
+                "icon": "",
+                "parentCode": "Test.Product",
+                "url": "/product/spu",
+                "children": []
+              }
+            ]
           }
         ]
       }
     ],
     "targetUrl": null,
     "success": true,
-    "error": null,
-    "unAuthorizedRequest": false,
-    "__abp": true
+    "error": null
   },
   "getFeatureTree": {
     "result": [

@@ -232,7 +232,7 @@ export default defineComponent({
           sessionStorage.setItem("userAccount", state.loginForm.username);
           // 菜单
           const menus = await GetMenuItems();
-          console.log("菜单", menus);
+          console.log("==========", menus);
           if (menus.length == 0) {
             ElMessage({
               message: "账号权限不足，请联系管理员设置权限",

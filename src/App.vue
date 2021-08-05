@@ -108,6 +108,7 @@ export default defineComponent({
       if (!Object.prototype.hasOwnProperty.call(route.meta, "isLogin")) {
         if (sessionStorage.getItem("token")) {
           const menus = await GetMenuItems();
+          console.log("----------", menus);
           store.commit("updateMenus", { Menus: menus });
         } else {
           sessionStorage.clear();

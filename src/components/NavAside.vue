@@ -105,6 +105,7 @@ import {
   onMounted,
   defineComponent,
   watch,
+  computed,
   watchEffect,
 } from "vue";
 import { useStore } from "vuex";
@@ -146,31 +147,56 @@ export default defineComponent({
       if (state.Menus.length == 0) {
         return [];
       } else {
+        // 1、总菜单选择label跳转时，返回当前跳转的菜单
         return state.Menus[navIndex.value].subMenu;
       }
     };
-    // Menus immediate配置非惰性（一进来就调用）
+    // 总菜单
+    const TotalMenu = computed(() => {
+      return store.getters.Menus;
+    });
+    /**
+     * 监听菜单
+     * Menus immediate 配置非惰性，进入触发
+     *用户刷新浏览器菜单状态会发生改变，切换系统/label时不会触发
+     */
     watch(
       state.Menus,
       () => {
-        console.log("激活state.Menus");
         state.curMenuData = getCurMenuData();
+        console.log("watch监听state.Menus", state.curMenuData);
+        /**
+         * 防止single-spa环境下 用户刷新页面 nav重置
+         * 目前方案有二：
+         * 1、往localstorage中打标记，拿到当前菜单的index，刷新后去筛选拿到nav
+         * 2、刷新页面时，获取当前页面参数，截取url，再匹配
+         */
+        // 当前路由
+        const curUrl = "/" + route.path.split(/\//)[1];
+        console.log("---curUrl---", curUrl);
+        console.log("TotalMenu", TotalMenu.value);
         console.log("state.curMenuData", state.curMenuData);
       },
       { immediate: true }
     );
-    // route
+    /**
+     * 监听route
+     * 菜单label切换时,包括切换系统时路由都会发生变化，更新当前菜单，刷新页面不会发生触发
+     */
     watch(route, async () => {
-      console.log("激活route");
+      console.log("navaside激活route");
       state.curMenuData = getCurMenuData();
       console.log("state.curMenuData", state.curMenuData);
     });
+    // 点击菜单
     const redirect = (item: any) => {
+      console.log("---获取总菜单---", state.Menus);
       if (item.path) {
         // this.createCrumbs()
         // this.createCrumbsDict(this.menuData, "")
         let curPath: string = route.path + location.search;
         state.curCrumbsDictLabel = state.crumbsDict[curPath];
+        // 面包屑
         store.commit("updateCrumbs", {
           crumbs: state.curCrumbsDictLabel,
         });
@@ -189,7 +215,7 @@ export default defineComponent({
         sessionStorage.setItem("NavIndex", navIndex.value);
         localStorage.setItem("NavIndex", navIndex.value);
         // 关闭菜单
-        store.commit("updateTopCollapse", { isTopCollapse: false });
+        // store.commit("updateTopCollapse", { isTopCollapse: false });
         router.push(item.path);
       }
     };

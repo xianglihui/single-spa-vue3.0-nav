@@ -5,11 +5,10 @@
       :title="titleTip"
       @click="collapseNavMenu"
     ></div>
-    <!--  -->
+    <!-- 展开总菜单：收藏菜单、当前系统菜单、外部系统菜单  -->
     <extendNav
       @collapseNavMenu="collapseNavMenu"
       :popoverData="popoverData"
-      :popoverOutsideData="popoverOutsideData"
     ></extendNav>
   </div>
 </template>
@@ -37,7 +36,7 @@ export default defineComponent({
     });
     const store = useStore();
     const route = useRoute();
-    // 总菜单 显示/隐藏
+    // 总菜单显示/隐藏
     const visible = computed(() => {
       return store.getters.getTopCollapse;
     });
@@ -73,6 +72,7 @@ export default defineComponent({
       }
     );
     const collapseNavMenu = () => {
+      console.log('触发触发collapseNavMenu')
       console.log("store", store.state);
       store.commit("updateTopCollapse", !visible.value);
       if (visible.value) {

@@ -32,17 +32,17 @@ if (AppConfig.isOpenNews) {
 
 const state = {
   isMobile: /(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent),
-  navIndex: sessionStorage.getItem("NavIndex") || 0,
-  isTopCollapse: false,
-  isNavCollapse: false,
-  isShowCfg: false,
-  crumbs: "",
-  curMenu: "",
+  navIndex: sessionStorage.getItem("NavIndex") || 0, //当前菜单标记
+  isTopCollapse: false, // 总菜单开关
+  isNavCollapse: false, // 菜单开关
+  isShowCfg: false, // 控制开关
+  crumbs: "", // 面包屑
+  curMenu: "", // 当前菜单
   userInfo: sessionStorage.getItem("userinfo")
     ? JSON.parse(sessionStorage.getItem("userinfo") || "{}")
-    : {},
-  prem: {},
-  premMenu: [],
+    : {}, // 用户信息
+  prem: {}, // 权限
+  premMenu: [], // 权限菜单
   Menus: sessionStorage.getItem("lsd-menus")
     ? JSON.parse(sessionStorage.getItem("lsd-menus") || "[]")
     : [], //菜单

@@ -86,7 +86,7 @@ export async function GetMenuItems() {
     );
     console.log("run2", serve);
     res = await serve.request();
-    console.log("获取菜单", res);
+    console.log("获取菜单---------", res);
     // 菜单中的设置模块
     configMenus = [];
     if (res.length == 0) {
