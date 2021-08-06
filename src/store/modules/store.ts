@@ -34,8 +34,8 @@ const state = {
   isMobile: /(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent),
   navIndex: sessionStorage.getItem("NavIndex") || 0, //当前系统标记(锚点)
   isTopCollapse: false, // 总菜单开关
-  isNavCollapse: false, // 菜单开关
-  isShowCfg: false, // 控制开关
+  isNavCollapse: false, // 菜单水平展开开关
+  isShowCfg: false, // 控制中心开关
   crumbs: "", // 面包屑
   curMenu: "", // 当前菜单
   userInfo: sessionStorage.getItem("userinfo")
