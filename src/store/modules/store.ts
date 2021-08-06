@@ -69,6 +69,7 @@ const getters: any = {
     return st["isShowCfg"];
   },
   getNavCollapse: (st: State) => {
+    console.log('st["isNavCollapse"];', st["isNavCollapse"]);
     return st["isNavCollapse"];
   },
   getTopCollapse: (st: State) => {

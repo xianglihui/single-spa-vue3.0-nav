@@ -1,7 +1,7 @@
 <template>
   <div class="leftNav">
     <!-- collapse 是否水平折叠收起菜单 -->
-    <div>
+    <div :class="{ menuMain: true, is_alive: !isNavCollapse }">
       <el-menu
         class="el-menu-vertical"
         :default-active="defaultActive"
@@ -81,6 +81,38 @@
           </el-menu-item>
         </template>
       </el-menu>
+      <!-- 系统设置 -->
+      <div class="bottomBtnWrap" :class="[isNavCollapse ? 'close' : 'open']">
+        <el-button
+          type="text"
+          class="popButton"
+          @click="
+            () => {
+              isResetNavIndex = true;
+              handleShowCfg();
+            }
+          "
+        >
+          <i class="el-icon-s-tools"></i>
+          <label class="tt">系统设置</label>
+        </el-button>
+        <i
+          :class="[
+            !isNavCollapse ? 'el-icon-d-arrow-left' : 'el-icon-d-arrow-right',
+          ]"
+          @click="toggleMenu()"
+        ></i>
+      </div>
+    </div>
+    <!-- 控制中心 -->
+    <div
+      class="menuCfg"
+      :style="{
+        width: `${isShowCfg ? 200 : 0}px`,
+        borderRight: `${isShowCfg ? 1 : 0}px solid #eee`,
+      }"
+    >
+      <!-- <setting ref="config" /> -->
     </div>
   </div>
 </template>
@@ -106,6 +138,7 @@ import {
   defineComponent,
   watch,
   computed,
+  toRef,
   watchEffect,
 } from "vue";
 import { useStore } from "vuex";
@@ -123,14 +156,16 @@ export default defineComponent({
       crumbsDict: {} as CommonAnyObject,
       refreshMenu: [], // 刷新页面拿到的menu
       isResetNavIndex: true, //重置系统锚点
+      // isCollapse: false, // 是否水平展开
     });
+    const isCollapse = ref(false);
     // 总菜单
     const allMenu = computed(() => {
       return store.getters.Menus;
     });
     // console.log("state.Menus", state.Menus);
     const defaultActive = ref("");
-    const isShowCfg = ref(""); // 系统设置弹出层
+    // const isShowCfg = ref("");
     const menuPath = ref(""); // 用户选择menu时的下标
     // const curCrumbsDictLabel = ref("");
     // 菜单label锚点
@@ -140,6 +175,11 @@ export default defineComponent({
       sessionStorage.setItem("menuPath", key);
       localStorage.setItem("menuPath", key);
     };
+    // 是否展示控制中心 系统设置弹出层
+    const isShowCfg = computed(() => {
+      return store.getters.getIsShowCfg;
+    });
+    console.log("isShowCfg", isShowCfg.value);
     /**
      * 根据锚点激活菜单的index
      * 1.在当前系统菜单切换时需要设置锚点
@@ -151,10 +191,6 @@ export default defineComponent({
         : sessionStorage.getItem("menuPath") || "0";
       console.log("当前激活菜单的index", defaultActive.value);
     };
-    // 是否菜单栏水平折叠
-    const isNavCollapse = computed(() => {
-      return store.getters.getNavCollapse;
-    });
     // 系统锚点
     const navIndex = computed(() => {
       return store.getters.navIndex;
@@ -232,12 +268,13 @@ export default defineComponent({
         store.commit("updateCrumbs", {
           crumbs: state.curCrumbsDictLabel,
         });
-        // if (item.isCollapse) {
-        //   this.toggleMenu();
-        // }
+        if (item.isCollapse) {
+          toggleMenu();
+        }
 
         // const currentPaths = ((route.query as any).from || "").split("/");
         // const navPaths = item.path.split("/");
+        // 更新锚点
         // state.isResetNavIndex = currentPaths[1] == navPaths[1] ? true : false;
 
         // if (state.isShowCfg) {
@@ -251,6 +288,52 @@ export default defineComponent({
         router.push(item.path);
       }
     };
+    const handleShowCfg = () => {
+      store.commit("updateShowCfg", { isShowCfg: !isShowCfg.value });
+      store.commit("updateTopCollapse", { isTopCollapse: false });
+      if (isShowCfg.value) {
+        // const toPath = (config as any).menus[
+        //   sessionStorage.getItem("cfgIndex") || 0
+        // ].path;
+        // allMenu.value.forEach((v: any) => {
+        //   if (toPath.indexOf(v.path) > -1) {
+        //     this.curMenuData = v.subMenu;
+        //     this.defaultActive = "0";
+        //   }
+        // });
+        // this.$store.commit(
+        //   "updateNavIndex",
+        //   this.Menus.findIndex((res: any) => {
+        //     return toPath.indexOf(res.path) > -1;
+        //   })
+        // );
+        // this.$router.push({ path: toPath, query: { from: this.$route.path } });
+      }
+    };
+    // 是否菜单栏水平折叠
+    const isNavCollapse = computed(() => {
+      return store.getters.getNavCollapse;
+    });
+    console.log("是否菜单栏水平折叠", isNavCollapse);
+    // watch(isNavCollapse.value, (newval, oldval) => {
+    //   console.log("isNavCollapse====", isNavCollapse);
+    //   console.log("newval", newval);
+    //   console.log("oldval", oldval);
+    // });
+    console.log("isNavCollapse outside", isNavCollapse.value);
+    // 水平展开
+    const toggleMenu = () => {
+      isCollapse.value = !isCollapse.value;
+      // 更新vuex状态
+      console.log("state.isCollapse,", isCollapse.value);
+      store.commit("updateNavCollapse", isCollapse.value
+      // {
+      //   // isNavCollapse: isCollapse.value,
+      //   isNavCollapse: isNavCollapse.value,
+      // }
+      );
+      // console.log("state.isCollapse,", isCollapse.value);
+    };
     onMounted(async () => {
       console.log("vuex", store.state);
       console.log("onMounted is start");
@@ -260,7 +343,10 @@ export default defineComponent({
       isNavCollapse,
       defaultActive,
       handleSelect,
+      isShowCfg,
+      handleShowCfg,
       redirect,
+      toggleMenu,
     };
   },
 });
@@ -274,6 +360,13 @@ export default defineComponent({
   background: #fff;
   z-index: 1;
   display: flex;
+  .menuMain {
+    width: 65px;
+    border-right: 1px solid #eee;
+  }
+  .menuMain.is_alive {
+    width: 240px;
+  }
   .el-menu-vertical {
     height: calc(100% - 45px);
     border-bottom: 1px solid #eee;
@@ -282,5 +375,83 @@ export default defineComponent({
   .el-menu-vertical:not(.el-menu--collapse) {
     width: 240px;
   }
+  .popButton {
+    cursor: pointer;
+  }
+  .menuCfg {
+    width: 0px;
+    background: #fff;
+    overflow: hidden;
+  }
+  .menuMain {
+    width: 65px;
+    border-right: 1px solid #eee;
+  }
+  .menuMain.is_alive {
+    width: 240px;
+  }
+  .close button {
+    -moz-transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    transition: all 0.3s linear;
+    display: none;
+  }
+  .bottomBtnWrap {
+    height: 45px;
+    line-height: 45px;
+    padding: 0 15px;
+    overflow: hidden;
+    /* border-right: 1px solid #eee; */
+    color: #777;
+    margin: 0 !important;
+    .el-icon-s-tools {
+      margin-right: 10px;
+      font-size: 16px;
+      vertical-align: text-bottom;
+    }
+
+    .close {
+      -moz-transition: all 0.3s linear;
+      -webkit-transition: all 0.3s linear;
+      transition: all 0.3s linear;
+    }
+    .el-icon-d-arrow-left,
+    .el-icon-d-arrow-right {
+      float: right;
+      margin-top: 11px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    .close i {
+      -moz-transition: all 0.3s linear;
+      -webkit-transition: all 0.3s linear;
+      transition: all 0.3s linear;
+      display: block;
+      width: 100%;
+      line-height: 40px;
+      margin-top: 0;
+      text-align: center;
+    }
+  }
+  .navCollapse {
+    width: 240px;
+  }
+  .el-menu {
+    border-right: none;
+    height: calc(100vh - 45px - 46px);
+  }
+  .iconfont {
+    font-size: 24px;
+    margin-right: 10px;
+  }
+}
+
+.el-menu.el-menu-vertical {
+  height: calc(100% - 45px);
+  border-bottom: 1px solid #eee;
+  overflow: auto;
+}
+.el-menu.el-menu-vertical-demo:not(.el-menu--collapse) {
+  width: 240px;
 }
 </style>
