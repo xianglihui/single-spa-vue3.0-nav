@@ -1,5 +1,7 @@
 ### desc
-vue3.0+ts+single-spa搭建的子项目导航系统
+
+vue3.0+ts+single-spa 搭建的子项目导航系统
+
 ### 目录结构
 
 Setup:
@@ -11,7 +13,7 @@ npm run json-server
 npm run plstinstall
 npm run serve
 
-# 本地环境 
+# 本地环境
 npm install
 npm run json-server
 npm run plstinstall
@@ -61,15 +63,28 @@ npm run serve:standalone
 |       `-- Login.vue
 `-- tsconfig.json
 ```
+
 ### 注意事项
-1. 目前存在与vue-router兼容性问题。https://github.com/single-spa/create-single-spa/issues/311
+
+1. 目前存在与 vue-router 兼容性问题。https://github.com/single-spa/create-single-spa/issues/311
 
 ### 本地开发
-本地开发环境注意注释 el: "#root_nav"，这段代码是为了在single-spa环境下，能够作为路由容器提供挂载功能挂载
+
+本地开发环境注意注释 el: "#root_nav"，这段代码是为了在 single-spa 环境下，能够作为路由容器提供挂载功能
+
 ### 暂未解决的业务问题
-1. 切换其他系统，侧边栏未发生变化
-2. 刷新页面，保持侧边栏状态
+
+1. 切换其他系统，侧边栏未发生变化 √
+2. 刷新页面，保持侧边栏状态 √
 3. 侧边栏收缩，控制类侧边栏
-### single-spa问题
-1. 看注意事项1
+4. 面包屑
+5. 登录校验表单
+
+### single-spa 问题
+
+1. 看注意事项 1
 2. 路由监听连续触发两次
+
+### bug
+
+1. 刷新页面，分别触发路由监听和总菜单监听 source:components/NavAside line:186

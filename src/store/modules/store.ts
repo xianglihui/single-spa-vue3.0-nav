@@ -32,7 +32,7 @@ if (AppConfig.isOpenNews) {
 
 const state = {
   isMobile: /(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent),
-  navIndex: sessionStorage.getItem("NavIndex") || 0, //当前菜单标记
+  navIndex: sessionStorage.getItem("NavIndex") || 0, //当前系统标记(锚点)
   isTopCollapse: false, // 总菜单开关
   isNavCollapse: false, // 菜单开关
   isShowCfg: false, // 控制开关

@@ -4,7 +4,7 @@
     <div>
       <el-menu
         class="el-menu-vertical"
-        :default-active="0"
+        :default-active="defaultActive"
         :unique-opened="true"
         :collapse="isNavCollapse"
         @select="handleSelect"
@@ -118,79 +118,111 @@ export default defineComponent({
     const router = useRouter();
     const state = reactive({
       curMenuData: [] as Array<MenuData>,
-      Menus: store.getters.Menus,
+      // Menus: store.getters.Menus,
       curCrumbsDictLabel: "",
       crumbsDict: {} as CommonAnyObject,
+      refreshMenu: [], // 刷新页面拿到的menu
+      isResetNavIndex: true, //重置系统锚点
     });
-    console.log("state.Menus", state.Menus);
+    // 总菜单
+    const allMenu = computed(() => {
+      return store.getters.Menus;
+    });
+    // console.log("state.Menus", state.Menus);
     const defaultActive = ref("");
-    const isNavCollapse = ref(store.getters.getNavCollapse); //是否水平折叠
-    const navIndex = ref(store.getters.navIndex);
     const isShowCfg = ref(""); // 系统设置弹出层
     const menuPath = ref(""); // 用户选择menu时的下标
     // const curCrumbsDictLabel = ref("");
+    // 菜单label锚点
     const handleSelect = (key: string, keyPath: string) => {
       menuPath.value = key;
+      console.log("key", key);
       sessionStorage.setItem("menuPath", key);
       localStorage.setItem("menuPath", key);
     };
-    // 当前激活菜单的 index
+    /**
+     * 根据锚点激活菜单的index
+     * 1.在当前系统菜单切换时需要设置锚点
+     * 2.在全部系统菜单中时需要设置锚点
+     */
     const getDefaultActive = () => {
       defaultActive.value = isShowCfg.value
         ? "0"
         : sessionStorage.getItem("menuPath") || "0";
+      console.log("当前激活菜单的index", defaultActive.value);
     };
-    // vuex中拿菜单
+    // 是否菜单栏水平折叠
+    const isNavCollapse = computed(() => {
+      return store.getters.getNavCollapse;
+    });
+    // 系统锚点
+    const navIndex = computed(() => {
+      return store.getters.navIndex;
+    });
+    // 拿菜单
     const getCurMenuData = () => {
-      getDefaultActive(); //获取当前选中index
-      console.log("激活getCurMenuData", state.Menus);
-      if (state.Menus.length == 0) {
+      getDefaultActive(); //获取当前选中label的index
+      // console.log("激活getCurMenuData", state.Menus);
+      if (allMenu.value.length == 0) {
         return [];
       } else {
-        // 1、总菜单选择label跳转时，返回当前跳转的菜单
-        return state.Menus[navIndex.value].subMenu;
+        // 根据锚点跳转
+        // return allMenu.value[navIndex.value].subMenu;
+        return state.refreshMenu;
       }
     };
-    // 总菜单
-    const TotalMenu = computed(() => {
-      return store.getters.Menus;
-    });
+    // 抽离路径筛选方法
+    const publicPath = () => {
+      const curPath = "/" + route.path.split(/\//)[1];
+      const curMenuFilter = allMenu.value.filter((item: any) => {
+        return item.path == curPath;
+      });
+      state.refreshMenu = curMenuFilter[0].subMenu;
+      state.curMenuData = getCurMenuData();
+    };
     /**
      * 监听所有菜单
      * Menus immediate 配置非惰性，进入触发
-     *用户刷新浏览器菜单状态会发生改变，由于是所有菜单，所以切换系统/label时不会触发
+     *用户刷新浏览器菜单状态会发生改变，监听所有菜单，所以切换系统/label时不会触发
      */
     watch(
-      state.Menus,
+      allMenu.value,
       () => {
-        state.curMenuData = getCurMenuData();
-        console.log("watch监听state.Menus", state.curMenuData);
+        publicPath();
+        // state.curMenuData = getCurMenuData();
+        console.log("navaside激活curMenuData", state.curMenuData);
         /**
-         * 防止single-spa环境下 用户刷新页面 nav重置
+         * 防止single-spa环境下 用户刷新页面nav重置
          * 目前方案有二：
-         * 1、往localstorage中打标记，拿到当前菜单的index，刷新后去筛选拿到nav
+         * 1、往localstorage中打标记(锚点)，拿到当前菜单的index，刷新后去筛选拿到nav
          * 2、刷新页面时，获取当前页面参数，截取url，再匹配
          */
         // 当前路由
-        const curUrl = "/" + route.path.split(/\//)[1];
-        console.log("---curUrl---", curUrl);
-        console.log("TotalMenu", TotalMenu.value);
-        console.log("state.curMenuData", state.curMenuData);
+        // const curPath = "/" + route.path.split(/\//)[1];
+        // 根据路径筛选当前菜单
+        // const curMenuFilter = allMenu.value.filter((item: any) => {
+        //   return item.path == curPath;
+        // });
+        // state.refreshMenu = curMenuFilter[0].subMenu;
       },
       { immediate: true }
     );
     /**
      * 监听route
-     * 菜单label切换时,包括切换系统时路由都会发生变化，更新当前菜单，刷新页面不会发生触发
+     * 菜单label切换时,包括切换系统时路由都会发生变化，刷新页面不会发生触发
+     * bug：刷新页面，分别触发路由监听和总菜单监听
+     * 场景：刷新页面，路由未发生变更，应该是不会触发监听，但是在当前环境下触发监听，目前还未找到原因 2021-08-06
+     * 在vue2.x，"vue-router": "^3.0.3",版本暂未发现出现该问题
      */
-    watch(route, async () => {
+    watch(route, () => {
       console.log("navaside激活route");
-      state.curMenuData = getCurMenuData();
+      publicPath();
+      // state.curMenuData = getCurMenuData();
       console.log("state.curMenuData", state.curMenuData);
     });
     // 点击菜单
     const redirect = (item: any) => {
-      console.log("---获取总菜单---", state.Menus);
+      console.log("---获取总菜单---", allMenu.value);
       if (item.path) {
         // this.createCrumbs()
         // this.createCrumbsDict(this.menuData, "")
@@ -211,9 +243,9 @@ export default defineComponent({
         // if (state.isShowCfg) {
         //   this.handleShowCfg();
         // }
-
-        sessionStorage.setItem("NavIndex", navIndex.value);
-        localStorage.setItem("NavIndex", navIndex.value);
+        // 存 系统锚点
+        // sessionStorage.setItem("NavIndex", navIndex.value);
+        // localStorage.setItem("NavIndex", navIndex.value);
         // 关闭菜单
         // store.commit("updateTopCollapse", { isTopCollapse: false });
         router.push(item.path);
@@ -226,6 +258,7 @@ export default defineComponent({
     return {
       ...toRefs(state),
       isNavCollapse,
+      defaultActive,
       handleSelect,
       redirect,
     };

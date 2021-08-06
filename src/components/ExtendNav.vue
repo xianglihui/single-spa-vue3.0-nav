@@ -166,7 +166,7 @@ export default defineComponent({
       leftWidth: 240, // 展开的宽度
       collectionMenuData: [], // 收藏
       popoverOutsideData: [], // 外部系统
-      menuData: [], // 菜单
+      menuData: [] as Array<MenuData>, // 总菜单
       visible, // 开关
     });
     // 每3个一组分割导航数据
@@ -194,7 +194,7 @@ export default defineComponent({
       }
       return menuArr;
     });
-    // 获取菜单数据
+    // 获取总菜单数据
     const getMenuData = computed(() => {
       // console.log("store.getters.Menus", store.getters.Menus);
       return store.getters.Menus;
@@ -228,9 +228,23 @@ export default defineComponent({
       k: number,
       prem: string
     ) => {
+      console.log("state.menuData", state.menuData);
       const _path = e.path || (e.subMenu as any)[0].path || "";
       console.log("_path", _path);
       store.commit("updateCurMenu", { curMenu: { name: name } });
+      // 根据code返回（下标）锚点 name也可以，只是为了获取锚点，也就是获取用户访问的系统
+      const navIndex = state.menuData.findIndex((v: any) => {
+        return v.prem === prem;
+      });
+      console.log("navIndex", navIndex);
+      // 当前菜单的锚点
+      const menuIndex = (state.menuData[navIndex].subMenu as any).findIndex(
+        (v: any) => {
+          return v.prem === e.prem;
+        }
+      );
+      sessionStorage.setItem("menuPath", e.path ? menuIndex : `${menuIndex}-0`);
+      localStorage.setItem("menuPath", e.path ? menuIndex : `${menuIndex}-0`);
       router.push(_path);
       collapseNavMenu();
     };
