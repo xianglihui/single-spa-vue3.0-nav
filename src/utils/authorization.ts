@@ -21,7 +21,7 @@ export async function AutoAuthorization() {
       "Content-Type": "application/x-www-form-urlencoded",
     },
   };
-  const autoLoginURL = AUTO_AUTH_PATH + "/token";
+  const autoLoginURL = AUTO_AUTH_PATH + "/autoLogin";
   return await axios.post(autoLoginURL, null, config).then((res) => res.data);
 }
 // 登录

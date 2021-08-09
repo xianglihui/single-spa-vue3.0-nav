@@ -297,9 +297,10 @@ export default defineComponent({
     onMounted(async () => {
       // 初始化
       init();
-      // if (AppConfig.isAutoLogin && !route.query.reLogin) {
-      //   autoLogin();
-      // }
+      console.log("AppConfig.isAutoLogin", AppConfig.isAutoLogin);
+      if (AppConfig.isAutoLogin && !route.query.reLogin) {
+        autoLogin();
+      }
     });
     return {
       ...toRefs(state),

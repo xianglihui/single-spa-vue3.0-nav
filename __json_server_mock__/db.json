@@ -8,10 +8,14 @@
       "token": "1111"
     }
   ],
+  "autoLogin": {},
   "getPermissions": [
     {
       "userid": "123456789",
-      "permission": ["localA.App", "localA.App.index"]
+      "permission": [
+        "localA.App",
+        "localA.App.index"
+      ]
     }
   ],
   "getUserInfo": {
@@ -731,6 +735,14 @@
       "featureName": "权限树",
       "icon": "",
       "url": "/authority/permission"
+    }
+  ],
+  "getSSOUser": [
+    {
+      "id": 1,
+      "name": "test",
+      "currentUnitName": "测试部门",
+      "domainName": "local\\test"
     }
   ]
 }
