@@ -222,6 +222,7 @@ export default defineComponent({
         onClose: async () => {
           // 存token
           localStorage.setItem("token", token);
+          console.log("token问题", token);
           sessionStorage.setItem("token", token);
           // 权限
           await getPremission();
@@ -278,7 +279,7 @@ export default defineComponent({
       const loading = ElLoading.service({ lock: true, text: "自动登录..." });
       AutoAuthorization()
         .then(async (res: any) => {
-          console.log("res", res);
+          console.log("自动登录", res);
           saveToken(res.access_token || "");
           loading.close();
         })

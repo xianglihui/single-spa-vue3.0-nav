@@ -103,12 +103,13 @@ export default defineComponent({
       (window as any).route = (path: string, query: any = {}) => {
         // router.push({ path, query: query });
       };
-      // 如果当前路由meta上不存在isLogin
-      // console.log("route.meta",route.meta)
+      /**
+       * 如果当前路由meta上不存在isLogin
+       * 每次刷新浏览器都会触发
+       */
       if (!Object.prototype.hasOwnProperty.call(route.meta, "isLogin")) {
         if (sessionStorage.getItem("token")) {
           const menus = await GetMenuItems();
-          console.log("----------", menus);
           store.commit("updateMenus", { Menus: menus });
         } else {
           sessionStorage.clear();
@@ -116,7 +117,7 @@ export default defineComponent({
           console.log(
             "如果当前路由meta上不存在isLogin时触发router.push--login"
           );
-          // router.push({ path: "/login" });
+          router.push({ path: "/login" });
         }
       }
       // setInterval(() => {

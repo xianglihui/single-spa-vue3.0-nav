@@ -22,7 +22,15 @@ export async function AutoAuthorization() {
     },
   };
   const autoLoginURL = AUTO_AUTH_PATH + "/autoLogin";
-  return await axios.post(autoLoginURL, null, config).then((res) => res.data);
+  /**
+   * 注意事项：
+   * 实际场景肯定是post请求，这里因为mock局限性 post请求会清空数据，所以改为get请求
+   * 这里是为了防止mock环境下，本地token缺失，自动登录后拿不到token导致再刷新仍然跳转Login的bug
+   */
+  // 真实环境
+  // return await axios.post(autoLoginURL, null, config).then((res) => res.data);
+  // mock环境
+  return await axios.get(autoLoginURL).then((res) => res.data);
 }
 // 登录
 export async function Authorization(options: Models.AuthReq) {
@@ -159,7 +167,7 @@ export async function GetAllModules() {
 interface Collection {
   featureId: number; // 菜单id
   featureCode: string; // 菜单code
-  featureName: string;  // 菜单name
+  featureName: string; // 菜单name
   url: string; // 菜单路径
   icon: string; // 菜单icon
   id: string;

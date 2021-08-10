@@ -8,14 +8,14 @@
       "token": "1111"
     }
   ],
-  "autoLogin": {},
+  "autoLogin": {
+    "access_token": "authorizationToken",
+    "token_type": "Bearer"
+  },
   "getPermissions": [
     {
       "userid": "123456789",
-      "permission": [
-        "localA.App",
-        "localA.App.index"
-      ]
+      "permission": ["localA.App", "localA.App.index"]
     }
   ],
   "getUserInfo": {

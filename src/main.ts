@@ -6,6 +6,7 @@ import "@/assets/common.css";
 import "element-plus/lib/theme-chalk/index.css";
 import store from "@/store/index";
 import ElementPlus from "element-plus";
+import { env, Eenv } from "@/utils/env";
 // router.beforeEach((to, from, next) => {
 //   console.log("to", to);
 //   console.log("from", from);
@@ -15,6 +16,9 @@ import ElementPlus from "element-plus";
 //   next();
 // });
 // console.log("main.ts");
+console.log("env===", env);
+console.log("process.env.NODE_ENV", process.env);
+console.log("Eenv.local", Eenv.local);
 const vueLifecycles = singleSpaVue({
   createApp,
   appOptions: {
@@ -36,6 +40,26 @@ const vueLifecycles = singleSpaVue({
     app.use(router);
     app.use(store);
     app.use(ElementPlus);
+    app.directive("permission", {
+      inserted: (
+        el: { parentNode: { removeChild: (arg0: any) => void } | null },
+        binding: { value: any } /*, vnode*/
+      ) => {
+        console.log("env===", env);
+        if (env === Eenv.local) {
+          return;
+        }
+        const permission =
+          localStorage.premission && localStorage.premission.length > 0
+            ? JSON.parse(localStorage.premission)
+            : [];
+        if (!permission.includes(binding.value)) {
+          if (el.parentNode !== null) {
+            el.parentNode.removeChild(el);
+          }
+        }
+      },
+    });
   },
 });
 

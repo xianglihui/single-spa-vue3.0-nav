@@ -161,6 +161,7 @@ export default defineComponent({
     const isCollapse = ref(false);
     // 总菜单
     const allMenu = computed(() => {
+      console.log('store.getters.Menus',store.getters.Menus)
       return store.getters.Menus;
     });
     // console.log("state.Menus", state.Menus);
