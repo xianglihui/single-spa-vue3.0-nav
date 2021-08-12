@@ -43,8 +43,8 @@ const state = {
     : {}, // 用户信息
   prem: {}, // 权限
   premMenu: [], // 权限菜单
-  Menus: sessionStorage.getItem("lsd-menus")
-    ? JSON.parse(sessionStorage.getItem("lsd-menus") || "[]")
+  Menus: sessionStorage.getItem("single-menus")
+    ? JSON.parse(sessionStorage.getItem("single-menus") || "[]")
     : [], //当前系统所有菜单
   companyInfo: sessionStorage.getItem("companyinfo")
     ? JSON.parse(sessionStorage.getItem("companyinfo") || "{}")

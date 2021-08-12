@@ -1,4 +1,5 @@
 <template>
+<!-- 挂载APP -->
   <div>
     <div id="app1"></div>
     

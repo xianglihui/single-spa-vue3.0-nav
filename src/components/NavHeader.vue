@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="rightMenu" v-if="isLogin">
-      <!-- <div class="lsd-tool" ref=""><slot name="tool"></slot></div> -->
+      <!-- <div class="single-tool" ref=""><slot name="tool"></slot></div> -->
       <div>
         <span class="node">欢迎，{{ userInfo.name }}</span>
         <span class="node" @click="logout">退出登陆</span>
@@ -109,7 +109,7 @@ export default defineComponent({
   font-family: "微软雅黑";
   margin: 0 20px;
 }
-.lsd-tool > * {
+.single-tool > * {
   padding: 0px 0px 0px 12px;
 }
 

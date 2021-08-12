@@ -48,7 +48,10 @@ const AppOps: any = {
     isVerificationCode: true, // 是否需要验证码
   },
 };
-// 设置或返回当前 URL 的主机名。
+/**
+ * 设置或返回当前 URL 的主机名。
+ * 根据当前URL匹配访问的系统
+ */
 export const AppConfig: any = AppOps[location.hostname];
 console.log("AppConfig", AppConfig);
 

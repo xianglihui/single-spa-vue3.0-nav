@@ -83,7 +83,7 @@ type Menu = {
 let configMenus: Menu[] = [];
 // 获取菜单
 export async function GetMenuItems() {
-  let res: any = false; // localStorage.getItem('lsd-menus')
+  let res: any = false; // localStorage.getItem('single-menus')
   if (res) {
     return JSON.parse(res);
   } else {
@@ -102,8 +102,8 @@ export async function GetMenuItems() {
     } else {
       // 拿当前系统的菜单
       const data = getNavMapMenu(res[0]["children"]);
-      sessionStorage.setItem("lsd-menus", JSON.stringify(data));
-      sessionStorage.setItem("lsd-config-menus", JSON.stringify(configMenus));
+      sessionStorage.setItem("single-menus", JSON.stringify(data));
+      sessionStorage.setItem("single-config-menus", JSON.stringify(configMenus));
       return data;
     }
   }

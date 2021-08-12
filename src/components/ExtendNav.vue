@@ -1,21 +1,21 @@
 <template>
   <div
-    class="lsd-nav-r"
+    class="single-nav-r"
     :style="{ width: `${visible ? `calc(100% - ${leftWidth}px)` : '0px'}` }"
   >
-    <div class="lsd-nav-r-wrap" :style="{ width: `${visible ? 1200 : 0}px` }">
+    <div class="single-nav-r-wrap" :style="{ width: `${visible ? 1200 : 0}px` }">
       <el-row :style="{ padding: '50px 30px 30px 30px' }">
         <!-- 收藏与菜单 s -->
         <el-col :span="18">
           <div :style="{ height: 'calc( 100vh - 184px)', overflowX: 'auto' }">
             <!-- 我的收藏 s -->
             <div v-show="collectionMenuData.length > 0">
-              <dl class="lsd-nav-r-wrap-l-dl">
+              <dl class="single-nav-r-wrap-l-dl">
                 <el-row>
                   <dd><h3>我的收藏</h3></dd>
                   <el-col
                     :span="8"
-                    class="lsd-nav-r-wrap-l-dl-li"
+                    class="single-nav-r-wrap-l-dl-li"
                     v-for="(val, key) in collectionMenuData"
                     :key="key"
                   >
@@ -36,7 +36,7 @@
             <!-- 当前系统菜单 s -->
             <el-row v-for="(values, k) in menus" :key="k">
               <el-col :span="8" v-for="(item, index) in values" :key="index">
-                <dl class="lsd-nav-r-wrap-l-dl">
+                <dl class="single-nav-r-wrap-l-dl">
                   <dd>
                     <h3>
                       <i
@@ -52,7 +52,7 @@
                   </dd>
                   <el-row>
                     <el-col
-                      class="lsd-nav-r-wrap-l-dl-li"
+                      class="single-nav-r-wrap-l-dl-li"
                       v-for="(val, key) in item.subMenu"
                       :key="key"
                     >
@@ -127,7 +127,7 @@
       </el-row>
     </div>
     <!-- 遮罩层 -->
-    <div class="lsd-nav-msk" @click="collapseNavMenu"></div>
+    <div class="single-nav-msk" @click="collapseNavMenu"></div>
   </div>
 </template>
 
@@ -280,13 +280,13 @@ export default defineComponent({
 </script>
 
 <style lang="less">
-.lsd-nav-r {
+.single-nav-r {
   position: fixed;
   height: calc(100vh - 46px);
   bottom: 0px;
   right: 0px;
   overflow: hidden;
-  .lsd-nav-msk {
+  .single-nav-msk {
     position: absolute;
     z-index: 900;
     width: 100%;
@@ -294,7 +294,7 @@ export default defineComponent({
     background: rgba(0, 0, 0, 0.3);
     cursor: pointer;
   }
-  .lsd-nav-r-wrap {
+  .single-nav-r-wrap {
     position: absolute;
     z-index: 999;
     width: 0px;
@@ -303,7 +303,7 @@ export default defineComponent({
     border-left: 1px solid #eaeaea;
     transition: all 0.3s linear;
     border: 1rpx solid pink;
-    .lsd-nav-r-wrap-l-dl {
+    .single-nav-r-wrap-l-dl {
       margin-bottom: 20px;
       h3 {
         font-size: 14px;
@@ -312,7 +312,7 @@ export default defineComponent({
         font-weight: 600;
         padding-left: 10px;
       }
-      .lsd-nav-r-wrap-l-dl-li {
+      .single-nav-r-wrap-l-dl-li {
         height: 32px;
         font-size: 14px;
         color: rgb(85, 85, 85);
