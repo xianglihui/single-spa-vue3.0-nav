@@ -24,7 +24,7 @@ import {
 } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
-import extendNav from "./ExtendNav.vue";
+import extendNav from "@/components/ExtendNav.vue";
 export default defineComponent({
   components: {
     extendNav,
@@ -72,7 +72,7 @@ export default defineComponent({
       }
     );
     const collapseNavMenu = () => {
-      console.log('触发触发collapseNavMenu')
+      console.log("触发触发collapseNavMenu");
       console.log("store", store.state);
       store.commit("updateTopCollapse", !visible.value);
       if (visible.value) {

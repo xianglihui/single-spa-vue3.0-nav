@@ -28,7 +28,15 @@
   <!-- <router-view /> -->
 </template>
 <script lang="ts">
-import { onMounted, reactive, toRefs, watch, defineComponent } from "vue";
+import {
+  onMounted,
+  reactive,
+  toRefs,
+  watch,
+  defineComponent,
+  toRaw,
+  ref,
+} from "vue";
 // import { onBeforeRouteUpdate } from "vue-router";
 import NavHeader from "@/components/NavHeader.vue";
 import NavAside from "@/components/NavAside.vue";
@@ -101,22 +109,28 @@ export default defineComponent({
     console.log("router.options.routes", router.options.routes);
     onMounted(async () => {
       (window as any).route = (path: string, query: any = {}) => {
-        // router.push({ path, query: query });
+        router.push({ path, query: query });
       };
       /**
-       * 如果当前路由meta上不存在isLogin
-       * 每次刷新浏览器都会触发
+       * hasOwnProperty() 方法会返回一个布尔值，指示对象自身属性中是否具有指定的属性（也就是，是否有指定的键）。
+       * 任何页面刷新都会触发App onMounted
+       * 我的思路是：用户刷新页面时，如果当前路由meta上不存在isLogin这个key，就会判断是否存在token，存在就拿菜单渲染，反之清空缓存跳转登录
+       * 我的目的是：设置isLogin这个key时，就不需要往下执行，如登录页，刷新页面是不需要执行条件中的逻辑
+       * bug：121正常打印，122正常打印，输出meta对象，能够看到meta中是有数据的，123行打印却为空对象，更新数据会正常打印,这在vue2.x中是正常的，在vue3.0可能是个bug
+       * 解决方案：应该可以通过路由导航中to.meta拿到对象，存入缓存，在app.vue中再取出来判断，未落实 2021-8-14
        */
-      if (!Object.prototype.hasOwnProperty.call(route.meta, "isLogin")) {
+      console.log("APP onMounted");
+      console.log("---route---", toRaw(route));
+      console.log("---toRaw(route).meta---", toRaw(route).meta);
+      console.log("---toRaw(route).meta._value---", toRaw(route).meta._value);
+      if (!Object.prototype.hasOwnProperty.call(route, "isLogin")) {
+        console.log("---hasOwnProperty---");
         if (sessionStorage.getItem("token")) {
           const menus = await GetMenuItems();
           store.commit("updateMenus", { Menus: menus });
         } else {
           sessionStorage.clear();
           localStorage.clear();
-          console.log(
-            "如果当前路由meta上不存在isLogin时触发router.push--login"
-          );
           router.push({ path: "/login" });
         }
       }

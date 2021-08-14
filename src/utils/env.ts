@@ -37,7 +37,7 @@ const AppOps: any = {
     name: "CentralSystem",
     title: "CentralSystem",
     app: "center",
-    isAutoLogin: true, //域账号自动登录
+    isAutoLogin: false, //域账号自动登录
     isOpenNews: false,
     login: [
       {

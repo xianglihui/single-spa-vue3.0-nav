@@ -29,14 +29,16 @@
 
 <script lang="ts">
 import outsideMenu from "@/components/OutSideMenu.vue";
-import { reactive, toRefs, ref, onMounted, defineComponent } from "vue";
+import { reactive, toRefs, ref, onMounted, defineComponent, watch } from "vue";
 import { useStore } from "vuex";
+import { useRoute } from "vue-router";
 export default defineComponent({
   components: {
     outsideMenu,
   },
   setup() {
     const store = useStore();
+    const route = useRoute();
     const userToken = ref(sessionStorage.getItem("token"));
     const userInfo = ref(store.getters.getUserInfo);
     const state = reactive({
@@ -58,11 +60,13 @@ export default defineComponent({
       ],
     });
     console.log("userInfo", userInfo.value);
+
     // 检查登录状态
     const checkLoginStat = () => {
       if (userToken.value) state.isLogin = true;
       // userToken.value && state.isLogin == true;
     };
+    // 退出登录
     const logout = () => {
       localStorage.clear();
       sessionStorage.clear();

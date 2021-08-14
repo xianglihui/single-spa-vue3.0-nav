@@ -31,10 +31,7 @@ router.onError((e: any) => {
 });
 router.beforeEach((to, from, next) => {
   console.log("to", to);
-  if (to.matched.length == 0) {
-    console.log("to.path", to.path);
-  }
-  next()
+  next();
   // console.log("from", from);
   // if (to.path === from.path) {
   //   return false;

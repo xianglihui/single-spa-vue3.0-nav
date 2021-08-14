@@ -83,8 +83,8 @@ npm run serve:standalone
 7. 总菜单收藏 √
 8. 总菜单外部系统显示 √
 9. 域账号登录
-10. 权限系统与nav交互
-11. 权限控制v-permission
+10. 权限系统与 nav 交互
+11. 权限控制 v-permission
 
 ### single-spa 问题
 
@@ -94,3 +94,4 @@ npm run serve:standalone
 ### bug
 
 1. 刷新页面，分别触发路由监听和总菜单监听 source:components/NavAside line:186
+2. App.vue 中 onMounted 里获取 route.mata 异常 source:App.vue line:121
