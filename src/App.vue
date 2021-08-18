@@ -36,6 +36,7 @@ import {
   defineComponent,
   toRaw,
   ref,
+  markRaw,
 } from "vue";
 // import { onBeforeRouteUpdate } from "vue-router";
 import NavHeader from "@/components/NavHeader.vue";
@@ -86,6 +87,10 @@ export default defineComponent({
       route,
       () => {
         console.log("监听router的跳转");
+        console.log(
+          "route.meta",
+          Object.prototype.hasOwnProperty.call(route.meta, "isLogin")
+        );
         if (Object.prototype.hasOwnProperty.call(route.meta, "isLogin")) {
           state.isHideMenu = true;
         } else {
@@ -119,10 +124,12 @@ export default defineComponent({
        * bug：121正常打印，122正常打印，输出meta对象，能够看到meta中是有数据的，123行打印却为空对象，更新数据会正常打印,这在vue2.x中是正常的，在vue3.0可能是个bug
        * 解决方案：应该可以通过路由导航中to.meta拿到对象，存入缓存，在app.vue中再取出来判断，未落实 2021-8-14
        */
-      console.log("APP onMounted");
-      console.log("---route---", toRaw(route));
-      console.log("---toRaw(route).meta---", toRaw(route).meta);
-      console.log("---toRaw(route).meta._value---", toRaw(route).meta._value);
+      // console.log("APP onMounted");
+      // 注释相关打印 将route转为普通数据导致页面跳转时监听不到route 2021-8-18
+      // console.log("---route---", toRaw(route));
+      // console.log("---toRaw(route).meta---", toRaw(route).meta);
+      // console.log("---toRaw(route).meta._value---", toRaw(route).meta.value);
+      // console.log("---mark---", markRaw(route));
       if (!Object.prototype.hasOwnProperty.call(route, "isLogin")) {
         console.log("---hasOwnProperty---");
         if (sessionStorage.getItem("token")) {
