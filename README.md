@@ -22,18 +22,20 @@ npm run serve:standalone
 
 ```
 项目结构
-|-- README.md
-|-- __json_server_mock__
+|-- README.md // md文件
+|-- __json_server_mock__  // mock数据
 |   `-- db.json
 |-- babel.config.js
 |-- package-lock.json
 |-- package.json
+|-- patches // router适配single-spa
+|   `-- vue-router+4.0.10.patch
 |-- public
 |   |-- favicon.ico
 |   `-- index.html
 |-- src
-|   |-- App.vue
-|   |-- api
+|   |-- App.vue // 根文件
+|   |-- api // api集中管理
 |   |   |-- index.ts
 |   |   `-- user.ts
 |   |-- assets
@@ -41,26 +43,31 @@ npm run serve:standalone
 |   |   `-- img
 |   |       `-- bg.jpg
 |   |-- components
-|   |   |-- Main.vue
-|   |   |-- NavHeader.vue
-|   |   `-- OutSideMenu.vue
+|   |   |-- ExtendNav.vue // 总菜单
+|   |   |-- Main.vue // 挂载APP
+|   |   |-- NavAside.vue // 侧边栏菜单
+|   |   |-- NavHeader.vue // 头部header
+|   |   `-- OutSideMenu.vue // 展开菜单
 |   |-- main.ts
 |   |-- models
-|   |   `-- Models.ts
+|   |   `-- Models.ts // interface
+|   |-- plugins
+|   |   `-- permission.ts // 权限
 |   |-- router
-|   |   `-- index.ts
+|   |   `-- index.ts // 路由
 |   |-- shims-vue.d.ts
 |   |-- store
-|   |   |-- index.ts
+|   |   |-- index.ts // vuex
 |   |   `-- modules
 |   |       `-- store.ts
 |   |-- utils
-|   |   |-- authorization.ts
-|   |   |-- env.ts
-|   |   `-- http.ts
+|   |   |-- authorization.ts // 登录
+|   |   |-- env.ts // 本地配置
+|   |   |-- http.ts // 封装
+|   |   `-- index.ts
 |   `-- views
 |       |-- About.vue
-|       `-- Login.vue
+|       `-- Login.vue // 登录页
 `-- tsconfig.json
 ```
 
