@@ -77,14 +77,15 @@ npm run serve:standalone
 1. 切换其他子系统，侧边栏未发生变化 √
 2. 刷新页面，保持侧边栏状态 √
 3. 侧边栏收缩/展开 √
-4. 面包屑
+4. 面包屑 √
 5. 账号登录，登录校验表单
 6. 控制类中心侧边栏
 7. 总菜单收藏 √
 8. 总菜单外部系统显示 √
-9. 域账号登录
+9. 域账号自动登录
 10. 权限系统与 nav 交互
 11. 权限控制 v-permission
+12. 二级菜单展示
 
 ### single-spa 问题
 
@@ -95,3 +96,4 @@ npm run serve:standalone
 
 1. 刷新页面，分别触发路由监听和总菜单监听 source:components/NavAside line:186
 2. App.vue 中 onMounted 里获取 route.mata 异常 source:App.vue line:121
+3. 切换系统时，全局控制菜单弹出

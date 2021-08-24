@@ -28,8 +28,19 @@
 </template>
 
 <script lang="ts">
+interface Crumbs {
+  name: string;
+}
 import outsideMenu from "@/components/OutSideMenu.vue";
-import { reactive, toRefs, ref, onMounted, defineComponent, watch } from "vue";
+import {
+  reactive,
+  toRefs,
+  ref,
+  onMounted,
+  defineComponent,
+  watch,
+  computed,
+} from "vue";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 export default defineComponent({
@@ -44,20 +55,7 @@ export default defineComponent({
     const state = reactive({
       title: "local-A",
       isLogin: false,
-      crumbs: [
-        {
-          name: "首页",
-          path: "/home",
-        },
-        {
-          name: "系统设置",
-          path: "/setting",
-        },
-        {
-          name: "用户管理",
-          path: "/setting/usermanage",
-        },
-      ],
+      crumbs: [] as Crumbs[],
     });
     console.log("userInfo", userInfo.value);
 
@@ -70,9 +68,51 @@ export default defineComponent({
     const logout = () => {
       localStorage.clear();
       sessionStorage.clear();
-      // this.$router.push("/login?reLogin=true")
       location.replace("/login?reLogin=true");
       // location.reload()
+    };
+    // 监听路由
+    watch(route, () => {
+      getCrumbs();
+    });
+    // 监听菜单
+    // watch(Menus, () => {
+    //   this.getCrumbs();
+    // });
+    // 计算属性
+    // 总菜单
+    const allMenu = computed(() => {
+      console.log("store.getters.Menus", store.getters.Menus);
+      return store.getters.Menus;
+    });
+    // 获取面包屑
+    const getCrumbs = () => {
+      state.crumbs = [];
+      const menus: any = allMenu.value;
+      if (menus.length > 0) {
+        // menuPath默认0
+        let menuPath: any = sessionStorage.getItem("menuPath") || "0";
+        // 用当前路径去匹配当前系统菜单
+        const curPath = "/" + route.path.split(/\//)[1];
+        const curMenuFilter = allMenu.value.filter((item: any) => {
+          return item.path == curPath;
+        });
+        const temp = { name: curMenuFilter[0].name };
+        // 一级面包屑
+        state.crumbs.push(temp);
+        // 二级面包屑
+        curMenuFilter[0].subMenu &&
+          childCrubs(curMenuFilter[0].subMenu, 0, menuPath.split("-"));
+      }
+    };
+    const childCrubs = (res: any, index: any, items: any) => {
+      state.crumbs.push({
+        name: res[items[index]] ? res[items[index]].name : "",
+      });
+      // 如果存在二级菜单
+      if (res[items[index]] && res[items[index]].subMenu) {
+        childCrubs(res[items[index]].subMenu, (index += 1), items);
+      }
     };
     // onMounted
     onMounted(async () => {

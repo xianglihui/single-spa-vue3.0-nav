@@ -161,7 +161,7 @@ export default defineComponent({
     const isCollapse = ref(false);
     // 总菜单
     const allMenu = computed(() => {
-      console.log('store.getters.Menus',store.getters.Menus)
+      console.log("store.getters.Menus", store.getters.Menus);
       return store.getters.Menus;
     });
     // console.log("state.Menus", state.Menus);
@@ -169,7 +169,10 @@ export default defineComponent({
     // const isShowCfg = ref("");
     const menuPath = ref(""); // 用户选择menu时的下标
     // const curCrumbsDictLabel = ref("");
-    // 菜单label锚点
+    /**
+     * 菜单label锚点
+     * 用于面包屑展示
+     */
     const handleSelect = (key: string, keyPath: string) => {
       menuPath.value = key;
       console.log("key", key);
@@ -327,11 +330,13 @@ export default defineComponent({
       isCollapse.value = !isCollapse.value;
       // 更新vuex状态
       console.log("state.isCollapse,", isCollapse.value);
-      store.commit("updateNavCollapse", isCollapse.value
-      // {
-      //   // isNavCollapse: isCollapse.value,
-      //   isNavCollapse: isNavCollapse.value,
-      // }
+      store.commit(
+        "updateNavCollapse",
+        isCollapse.value
+        // {
+        //   // isNavCollapse: isCollapse.value,
+        //   isNavCollapse: isNavCollapse.value,
+        // }
       );
       // console.log("state.isCollapse,", isCollapse.value);
     };
