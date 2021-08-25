@@ -1,7 +1,8 @@
 <template>
-  <!-- 顶部面包屑 -->
+  <!-- 顶部header -->
   <nav-header v-if="!isHideMenu"></nav-header>
   <div>
+    <!-- 菜单nav -->
     <nav-aside v-if="!isHideMenu"></nav-aside>
     <div
       class="moduleContent navCollapse"
@@ -10,6 +11,7 @@
         top: `${isLogin ? 46 : 0}px`,
       }"
     >
+      <!-- login页 -->
       <router-view />
     </div>
     <!--navWidth，navHeight配置是为了适配 single-spa环境的nav和header -->
@@ -22,6 +24,7 @@
       }"
       v-show="!isHideMenu"
     >
+      <!-- 挂载子项目 -->
       <main-app />
     </div>
   </div>
@@ -34,7 +37,7 @@ import NavHeader from "@/components/NavHeader.vue";
 import NavAside from "@/components/NavAside.vue";
 import MainApp from "@/components/Main.vue";
 import { useStore } from "vuex";
-import { useRoute, useRouter, onBeforeRouteUpdate } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { GetMenuItems } from "@/utils/authorization";
 // definComponent主要是用来帮助Vue在TS下正确推断出setup()组件的参数类型;引入 defineComponent() 以正确推断 setup() 组件的参数类型；defineComponent 可以正确适配无 props、数组 props 等形式；
 export default defineComponent({
@@ -45,11 +48,10 @@ export default defineComponent({
   },
   setup() {
     const state = reactive({
-      isHideMenu: true,
-      navWidth: 240,
-      navHeight: 46,
-      isLogin: true,
-      erd: "",
+      isHideMenu: true, // 是否隐藏菜单
+      navWidth: 240, // 侧边nav宽度
+      navHeight: 46, // 侧边栏高度
+      isLogin: true, // 登录标记
     });
     const store = useStore();
     const route = useRoute();
@@ -99,11 +101,9 @@ export default defineComponent({
     //     console.log("watch监听store", store);
     //   }
     // );
-    onBeforeRouteUpdate((to) => {
-      console.log("=====", to);
-    });
     console.log("router.options.routes", router.options.routes);
     onMounted(async () => {
+      //暴露一个全局可用的route跳转接口，用于跨项目跳转
       (window as any).route = (path: string, query: any = {}) => {
         router.push({ path, query: query });
       };
@@ -132,14 +132,6 @@ export default defineComponent({
           router.push({ path: "/login" });
         }
       }
-      // setInterval(() => {
-      //   state.erd.listenTo(
-      //     document.getElementsByClassName("leftNav"),
-      //     (element: any) => {
-      //       state.navWidth = element.offsetWidth - 1;
-      //     }
-      //   );
-      // }, 100);
     });
     return {
       ...toRefs(state),

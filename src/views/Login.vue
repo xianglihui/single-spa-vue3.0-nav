@@ -108,7 +108,6 @@ export default defineComponent({
       token: "",
     });
     // const val = ref(1);
-    // console.log("val", val.value);
     // vuex
     const store = useStore();
     const router = useRouter();
@@ -146,7 +145,6 @@ export default defineComponent({
       // } else {
       //   return false;
       // }
-      console.log("state", state.loginForm);
       // });
     };
     // 域账号登录
@@ -165,14 +163,12 @@ export default defineComponent({
           return false;
         }
       });
-      console.log("state", state.loginForm);
     };
     // 登录
     const login = async () => {
       let res: Models.AuthRes = {};
       // 授权登录
       await Authorization(state.loginForm).then(async (res: Models.AuthRes) => {
-        console.log("授权登录", res);
         await saveToken(res.access_token || "");
       });
       return true;
@@ -202,19 +198,15 @@ export default defineComponent({
         sessionStorage.setItem("prem", JSON.stringify(prem));
         // store.commit("updatePrem", { prem })
       }
-      console.log("用户权限");
     };
     // 用户信息
     const getUserInfo = async () => {
-      console.log("用户信息");
       const res = await userInfo();
       // 更新用户信息
       store.commit("updateUserInfo", { userInfo: res });
-      console.log("用户信息", res);
     };
     // 存取信息 自动登录与授权登录公用
     const saveToken = async (token: string) => {
-      console.log("token", token);
       ElMessage({
         message: "登录成功",
         type: "success",
@@ -222,7 +214,6 @@ export default defineComponent({
         onClose: async () => {
           // 存token
           localStorage.setItem("token", token);
-          console.log("token问题", token);
           sessionStorage.setItem("token", token);
           // 权限
           await getPremission();
@@ -233,7 +224,6 @@ export default defineComponent({
           sessionStorage.setItem("userAccount", state.loginForm.username);
           // 菜单
           const menus = await GetMenuItems();
-          console.log("==========", menus);
           if (menus.length == 0) {
             ElMessage({
               message: "账号权限不足，请联系管理员设置权限",
@@ -244,10 +234,6 @@ export default defineComponent({
             store.commit("updateMenus", { Menus: menus });
             store.commit("updateNavIndex", 0);
             store.commit("updateIsLogin", { isLogin: true });
-            console.log("updateIsLogin", store);
-            console.log(menus, "路由");
-            // console.log("menus[0].subMenu[0].subMenu[0].path",menus[0].subMenu[0].subMenu[0].path)
-            console.log("subMenu[0].path", menus[0].subMenu[0].path);
             router.push(
               menus[0].subMenu[0].subMenu
                 ? menus[0].subMenu[0].subMenu[0].path
@@ -269,9 +255,7 @@ export default defineComponent({
         state.imageCodeRes.token = res.token;
         // state.token = res.token;
         // }
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     };
     // 自动登录
     const autoLogin = () => {
@@ -279,7 +263,6 @@ export default defineComponent({
       const loading = ElLoading.service({ lock: true, text: "自动登录..." });
       AutoAuthorization()
         .then(async (res: any) => {
-          console.log("自动登录", res);
           saveToken(res.access_token || "");
           loading.close();
         })
@@ -298,7 +281,6 @@ export default defineComponent({
     onMounted(async () => {
       // 初始化
       init();
-      console.log("AppConfig.isAutoLogin", AppConfig.isAutoLogin);
       if (AppConfig.isAutoLogin && !route.query.reLogin) {
         autoLogin();
       }

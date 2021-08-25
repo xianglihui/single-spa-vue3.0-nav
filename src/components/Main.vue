@@ -1,16 +1,7 @@
 <template>
-<!-- 挂载APP -->
+  <!-- 挂载APP -->
   <div>
+    <!-- 权限 -->
     <div id="app1"></div>
-    
   </div>
 </template>
-<script lang="ts">
-import { defineComponent } from "vue";
-export default defineComponent({
-  setup() {
-    return {};
-  },
-});
-</script>
-<style lang="less" scoped></style>

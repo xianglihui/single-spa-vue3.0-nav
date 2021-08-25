@@ -97,14 +97,15 @@ export default defineComponent({
         const curMenuFilter = allMenu.value.filter((item: any) => {
           return item.path == curPath;
         });
-        const temp = { name: curMenuFilter[0].name };
         // 一级面包屑
+        const temp = { name: curMenuFilter[0].name };
         state.crumbs.push(temp);
-        // 二级面包屑
+        // 二级面包屑展示
         curMenuFilter[0].subMenu &&
           childCrubs(curMenuFilter[0].subMenu, 0, menuPath.split("-"));
       }
     };
+    // 二级面包屑
     const childCrubs = (res: any, index: any, items: any) => {
       state.crumbs.push({
         name: res[items[index]] ? res[items[index]].name : "",
