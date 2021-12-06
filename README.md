@@ -96,7 +96,7 @@ npm run serve:standalone
 
 ### single-spa 问题
 
-1. 看注意事项 1
+1. 看注意事项 1（升级single-spa6 可以解决该问题）
 2. 路由监听连续触发两次
 
 ### bug
@@ -104,3 +104,4 @@ npm run serve:standalone
 1. 刷新页面，分别触发路由监听和总菜单监听 source:components/NavAside line:186
 2. App.vue 中 onMounted 里获取 route.mata 异常 source:App.vue line:121
 3. 切换系统时，全局控制菜单弹出
+
