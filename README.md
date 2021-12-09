@@ -1,8 +1,13 @@
 ### desc
 
-vue3.0+ts+single-spa 搭建的子项目导航系统
+vue3.0+ts+single-spa 搭建的子项目导航系统。
 
-### 目录结构
+传统前端项目基本具有login登录功能，nav导航功能，且在其中部署多个子项目，缺陷在于修改部分功能需要全量发布，某个子项目服务down掉容易影响其他子项目，且多个大型项目开发中，特别是多个企业级应用之间nav与login无法复用。
+
+single-spa 微前端解决的问题是，多个大型项目间公用一个login登录功能与nav导航功能，且子项目可独立部署和发布，服务互不影响。
+
+
+### Setup
 
 Setup:
 
@@ -19,6 +24,20 @@ npm run json-server
 npm run plstinstall
 npm run serve:standalone
 ```
+# 完整微前端项目 setUp
+1. git pull https://github.com/xianglihui/singleSpa-base-file.git
+2. cd singleSpa-base-file
+3. npm run server
+4. git pull https://github.com/xianglihui/single-spa-vue3.0-nav.git
+5. single-spa-vue3.0-nav
+6. npm install
+7. npm run json-server
+8. npm run postinstall
+9. serve:standalone
+10. git pull https://github.com/xianglihui/single-spa-vue3.0-Authority.git
+11. npm install 
+12. npm run postinstall
+13. npm run serve:standalone
 
 ```
 项目结构
