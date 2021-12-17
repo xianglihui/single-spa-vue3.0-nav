@@ -255,7 +255,9 @@ export default defineComponent({
         state.imageCodeRes.token = res.token;
         // state.token = res.token;
         // }
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     };
     // 自动登录
     const autoLogin = () => {
