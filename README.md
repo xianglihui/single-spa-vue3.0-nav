@@ -6,6 +6,7 @@ vue3.0+ts+single-spa 搭建的子项目导航系统。
 
 single-spa 微前端解决的问题是，一个基座容器下，多个大型项目间共用一个login登录功能与nav导航功能，nav项目提供挂载子项目功能，子项目可独立部署和发布，服务互不影响。
 
+single-spa不提供JS沙箱及CSS样式隔离，最常见的CSS样式隔离方法是`css scoped`,JS则是闭包（app.js)。
 
 ### Setup
 
